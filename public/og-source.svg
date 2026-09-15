@@ -17,7 +17,8 @@
   <circle cx="230" cy="315" r="140" fill="none" stroke="url(#gold)" stroke-width="7"/>
   <path d="M230 245c19 24 32 45 32 69a32 32 0 0 1-64 0c0-24 13-45 32-69z" fill="url(#flame)"/>
   <path d="M154 372c0-27 34-50 76-50s76 23 76 50-34 33-76 33-76-6-76-33z" fill="url(#gold)"/>
-  <text x="420" y="290" font-family="Georgia, serif" font-size="76" fill="url(#gold)" font-weight="bold">HolyPlace</text>
-  <text x="420" y="345" font-family="Georgia, serif" font-size="32" fill="#e6d8b8">Aarti &amp; Mantra Chants</text>
-  <text x="420" y="395" font-family="Georgia, serif" font-size="24" fill="#b8a988">Devanagari verses with English translation</text>
+  <text x="420" y="270" font-family="Georgia, serif" font-size="72" fill="url(#gold)" font-weight="bold">HolyPlace</text>
+  <text x="420" y="320" font-family="Georgia, serif" font-size="28" fill="#e6d8b8">Aarti, Mantra &amp; Prayer Chants</text>
+  <text x="420" y="360" font-family="Georgia, serif" font-size="24" fill="#b8a988">Hinduism · Sikhism · Christianity · Buddhism</text>
+  <text x="420" y="400" font-family="Georgia, serif" font-size="22" fill="#8a7c62">Original script, with English translation</text>
 </svg>
