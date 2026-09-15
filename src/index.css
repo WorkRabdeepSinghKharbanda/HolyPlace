@@ -1,4 +1,5 @@
 :root {
+  --font-scale: 1;
   --gold: #c9a24b;
   --gold-bright: #e6c877;
   --bg: #faf6ee;
@@ -45,7 +46,8 @@ body {
 .site-header {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
   padding: 1rem 2rem;
   border-bottom: 1px solid var(--border);
   background: var(--surface);
@@ -349,7 +351,7 @@ main {
 
 .verse .hi {
   white-space: pre-line;
-  font-size: 1.15rem;
+  font-size: calc(1.15rem * var(--font-scale));
   line-height: 1.8;
 }
 
@@ -357,7 +359,24 @@ main {
   white-space: pre-line;
   color: var(--text-muted);
   margin-top: 0.5rem;
-  font-size: 0.95rem;
+  font-size: calc(0.95rem * var(--font-scale));
+}
+
+.verse {
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.verse-active {
+  background: var(--bg-alt);
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.mantra-translit {
+  font-size: calc(1rem * var(--font-scale));
 }
 
 .chant-toolbar {
@@ -564,6 +583,67 @@ main {
   .card {
     box-shadow: none;
     border: none;
+  }
+}
+
+.breadcrumb {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.breadcrumb a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--gold);
+}
+
+.breadcrumb-sep {
+  margin: 0 0.4rem;
+  color: var(--border);
+}
+
+.breadcrumb-current {
+  color: var(--text);
+}
+
+.font-size-control {
+  display: flex;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
+.font-size-control button {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.font-size-control button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.page-transition {
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

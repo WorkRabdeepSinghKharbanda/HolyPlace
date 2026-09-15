@@ -44,6 +44,10 @@ const en = {
   chant_streak: " · streak {n}",
   recite_prev: "← Prev",
   recite_next: "Next →",
+  chant_share: "📤 Share",
+  chant_copy: "📋 Copy",
+  chant_copied: "✓ Copied",
+  home_continue: "Continue where you left off",
 };
 
 const hi: typeof en = {
@@ -82,6 +86,10 @@ const hi: typeof en = {
   chant_streak: " · लगातार {n} दिन",
   recite_prev: "← पिछला",
   recite_next: "अगला →",
+  chant_share: "📤 साझा करें",
+  chant_copy: "📋 कॉपी करें",
+  chant_copied: "✓ कॉपी हुआ",
+  home_continue: "जहां छोड़ा था वहीं से जारी रखें",
 };
 
 const es: typeof en = {
@@ -120,6 +128,10 @@ const es: typeof en = {
   chant_streak: " · racha de {n}",
   recite_prev: "← Anterior",
   recite_next: "Siguiente →",
+  chant_share: "📤 Compartir",
+  chant_copy: "📋 Copiar",
+  chant_copied: "✓ Copiado",
+  home_continue: "Continuar donde lo dejaste",
 };
 
 export const translations = { en, hi, es };

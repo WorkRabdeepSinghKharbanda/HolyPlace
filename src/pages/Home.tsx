@@ -3,6 +3,7 @@ import { religions } from "../data/religions";
 import { allOccasions, chantByPath, chantsByOccasion, dailyChant } from "../data/chantIndex";
 import { upcomingFestivals } from "../data/festivals";
 import { useFavorites } from "../hooks/useFavorites";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import Seo from "../components/Seo";
 import ReminderWidget from "../components/ReminderWidget";
 import { useLang } from "../context/LangContext";
@@ -14,6 +15,8 @@ export default function Home() {
   const daily = dailyChant();
   const festivals = upcomingFestivals();
   const { t } = useLang();
+  const [lastVisited] = useLocalStorage<string | null>("holyplace-last-visited", null);
+  const lastEntry = lastVisited ? chantByPath(lastVisited) : undefined;
 
   return (
     <div>
@@ -51,6 +54,19 @@ export default function Home() {
         </section>
       ) : (
         <>
+          {lastEntry && (
+            <section className="home-section">
+              <h2>{t("home_continue")}</h2>
+              <Link to={lastEntry.path} className="deity-card" style={{ display: "block", maxWidth: 360 }}>
+                <span className="epithet" style={{ color: lastEntry.religionColor, fontWeight: "bold" }}>
+                  {lastEntry.chant.typeLabel} · {lastEntry.religionName}
+                </span>
+                <span className="name">{lastEntry.figureName}</span>
+                <span className="epithet">{lastEntry.chant.title}</span>
+              </Link>
+            </section>
+          )}
+
           <section className="home-section">
             <h2>{t("home_chant_of_day")}</h2>
             <Link to={daily.path} className="deity-card" style={{ display: "block", maxWidth: 360 }}>

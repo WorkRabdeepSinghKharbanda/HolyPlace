@@ -1,6 +1,7 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { getReligion } from "../data/religions";
 import Seo from "../components/Seo";
+import Breadcrumb from "../components/Breadcrumb";
 import { useLang } from "../context/LangContext";
 
 export default function ReligionPage() {
@@ -10,17 +11,20 @@ export default function ReligionPage() {
 
   if (!religion) return <Navigate to="/" replace />;
 
+  const breadcrumb = [
+    { name: "Home", path: "/" },
+    { name: religion.name, path: `/${religion.id}` },
+  ];
+
   return (
     <div>
       <Seo
         title={`${religion.name} — Chants & Prayers — HolyPlace`}
         description={`${religion.tagline}. ${religion.script} texts with English translation.`}
         path={`/${religion.id}`}
-        breadcrumb={[
-          { name: "Home", path: "/" },
-          { name: religion.name, path: `/${religion.id}` },
-        ]}
+        breadcrumb={breadcrumb}
       />
+      <Breadcrumb items={breadcrumb} />
       <Link to="/" className="back-link">
         {t("back_all_traditions")}
       </Link>

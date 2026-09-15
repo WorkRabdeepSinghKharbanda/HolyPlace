@@ -1,15 +1,20 @@
-import { useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { getChant, getFigure, getReligion, type Verse } from "../data/religions";
 import Seo from "../components/Seo";
+import Breadcrumb from "../components/Breadcrumb";
 import ReciteMode from "../components/ReciteMode";
 import ScriptToggle from "../components/ScriptToggle";
+import ShareButton from "../components/ShareButton";
 import { useFavorites } from "../hooks/useFavorites";
 import { useSpeech } from "../hooks/useSpeech";
 import { usePracticeStreak } from "../hooks/usePracticeStreak";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { useSwipe } from "../hooks/useSwipe";
 import { supportsScriptToggle, transliterateFromNative } from "../lib/transliterate";
 import { useLang } from "../context/LangContext";
+
+const SITE = "https://holyplace.vercel.app";
 
 const SPEECH_LANG: Record<string, string> = {
   Devanagari: "hi-IN",
@@ -19,12 +24,17 @@ const SPEECH_LANG: Record<string, string> = {
 
 export default function ChantPage() {
   const { religionId, figureId, chantId } = useParams();
+  const navigate = useNavigate();
   const religion = religionId ? getReligion(religionId) : undefined;
   const figure = religionId && figureId ? getFigure(religionId, figureId) : undefined;
   const chant = religionId && figureId && chantId ? getChant(religionId, figureId, chantId) : undefined;
   const [showTranslation, setShowTranslation] = useState(true);
   const [reciting, setReciting] = useState(false);
   const [script, setScript] = useLocalStorage("holyplace-script", "native");
+  const [, setLastVisited] = useLocalStorage<string | null>("holyplace-last-visited", null);
+  const [copied, setCopied] = useState(false);
+  const [activeVerse, setActiveVerse] = useState(0);
+  const verseRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const { t } = useLang();
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -33,6 +43,40 @@ export default function ChantPage() {
   const { supported: speechSupported, speaking, play, stop } = useSpeech(
     chant?.verses.map((v) => v.hi) ?? [],
     religion ? SPEECH_LANG[religion.script] ?? "en-US" : "en-US"
+  );
+
+  useEffect(() => {
+    if (path) setLastVisited(path);
+  }, [path, setLastVisited]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible.length > 0) {
+          const idx = verseRefs.current.findIndex((el) => el === visible[0].target);
+          if (idx !== -1) setActiveVerse(idx);
+        }
+      },
+      { threshold: [0.5, 0.75], rootMargin: "-20% 0px -40% 0px" }
+    );
+    verseRefs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, [chant]);
+
+  const swipeHandlers = useSwipe(
+    () => {
+      if (!figure || !religion || !chant) return;
+      const idx = figure.chants.findIndex((c) => c.id === chant.id);
+      const next = figure.chants[idx + 1];
+      if (next) navigate(`/${religion.id}/${figure.id}/${next.id}`);
+    },
+    () => {
+      if (!figure || !religion || !chant) return;
+      const idx = figure.chants.findIndex((c) => c.id === chant.id);
+      const prev = figure.chants[idx - 1];
+      if (prev) navigate(`/${religion.id}/${figure.id}/${prev.id}`);
+    }
   );
 
   if (!religion || !figure || !chant) return <Navigate to="/" replace />;
@@ -47,19 +91,31 @@ export default function ChantPage() {
       ? transliterateFromNative(chant.nativeTitle, religion.script, script)
       : chant.nativeTitle;
 
+  const breadcrumb = [
+    { name: "Home", path: "/" },
+    { name: religion.name, path: `/${religion.id}` },
+    { name: figure.name, path: `/${religion.id}/${figure.id}` },
+    { name: chant.title, path },
+  ];
+
+  const copyChant = async () => {
+    const text = displayVerses
+      .map((v) => `${v.hi}${v.translit ? `\n${v.translit}` : ""}${showTranslation ? `\n${v.en}` : ""}`)
+      .join("\n\n");
+    await navigator.clipboard.writeText(`${chant.title} (${displayNativeTitle})\n\n${text}\n\n${SITE}${path}`);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <div>
+    <div {...swipeHandlers}>
       <Seo
         title={`${chant.title} — ${figure.name} — HolyPlace`}
         description={`${chant.typeLabel} for ${figure.name}: ${chant.nativeTitle}, in ${religion.script} with English translation.`}
         path={path}
-        breadcrumb={[
-          { name: "Home", path: "/" },
-          { name: religion.name, path: `/${religion.id}` },
-          { name: figure.name, path: `/${religion.id}/${figure.id}` },
-          { name: chant.title, path },
-        ]}
+        breadcrumb={breadcrumb}
       />
+      <Breadcrumb items={breadcrumb} />
       <Link to={`/${religion.id}/${figure.id}`} className="back-link no-print">
         {t("back_all_chants_for", { name: figure.name })}
       </Link>
@@ -100,6 +156,17 @@ export default function ChantPage() {
         <button className="toolbar-btn" onClick={() => setReciting(true)}>
           {t("chant_recite_mode")}
         </button>
+        <button className="toolbar-btn" onClick={copyChant}>
+          {copied ? t("chant_copied") : t("chant_copy")}
+        </button>
+        <ShareButton
+          religionName={religion.name}
+          figureName={figure.name}
+          chantTitle={chant.title}
+          nativeTitle={displayNativeTitle}
+          firstVerseHi={displayVerses[0].hi}
+          url={`${SITE}${path}`}
+        />
         <button className="toolbar-btn" onClick={() => window.print()}>
           {t("chant_print")}
         </button>
@@ -111,7 +178,13 @@ export default function ChantPage() {
 
       <section className="card">
         {displayVerses.map((verse, i) => (
-          <div className="verse" key={i}>
+          <div
+            className={`verse ${i === activeVerse ? "verse-active" : ""}`}
+            key={i}
+            ref={(el) => {
+              verseRefs.current[i] = el;
+            }}
+          >
             <p className="hi">{verse.hi}</p>
             {verse.translit && <p className="mantra-translit">{verse.translit}</p>}
             {showTranslation && <p className="en">{verse.en}</p>}

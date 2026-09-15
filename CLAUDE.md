@@ -127,6 +127,47 @@ don't (multi-line native text is self-contained).
   selector. Adding a language means adding one object to `translations.ts`
   with every key `en` has; TypeScript enforces the key set matches.
 
+## Frontend polish features
+
+- **Font size control** (`src/hooks/useFontScale.ts`, in the header) — sets
+  `--font-scale` on `documentElement`; verse/translit text sizes are
+  `calc(base * var(--font-scale))` in `index.css`. Persisted in
+  localStorage, applies site-wide, not per-chant.
+- **Swipe between chants** (`src/hooks/useSwipe.ts`, wired in
+  `ChantPage.tsx`) — swipe left/right on the page moves to the next/prev
+  chant within the same figure's `chants` array. Touch events only
+  (no-op on desktop, which has the toolbar instead).
+- **Scroll-spy verse highlight** — `IntersectionObserver` over verse refs
+  in `ChantPage.tsx`, adds `.verse-active` to whichever verse is most
+  in view. Matters most on long chants (Hanuman Chalisa); harmless no-op
+  on single-verse mantras.
+- **Copy to clipboard** — "Copy" button in the chant toolbar copies the
+  full chant (native text + transliteration + translation, if shown) plus
+  the page URL, via `navigator.clipboard`.
+- **Visible breadcrumb** (`src/components/Breadcrumb.tsx`) — same
+  `{name, path}` array already built for `Seo`'s JSON-LD `BreadcrumbList`,
+  now also rendered as a real nav element on Religion/Figure/Chant pages.
+  Keep both in sync when adding a new page level — they're built from the
+  same array so this is naturally the case, don't build a second one.
+- **Keyboard shortcuts in recite mode** — arrow keys / space to
+  advance, Escape to close (`ReciteMode.tsx`).
+- **"Continue where you left off"** — `ChantPage` writes
+  `localStorage["holyplace-last-visited"]` on every mount; Home reads it
+  back via `chantByPath` and shows a card if it resolves to a real chant.
+- **Page transition** — `Layout.tsx` keys `<main>` on `location.pathname`
+  so it remounts (and re-plays the `fadeIn` CSS animation) on every route
+  change. Purely cosmetic, no data implications.
+- **Share as image** (`src/lib/shareImage.ts` + `ShareButton.tsx`) — draws
+  a branded PNG card (site name, figure, chant title, first verse) on an
+  in-memory `<canvas>`, no server, no image library. Uses
+  `navigator.share({files})` where supported (most mobile browsers — this
+  is what lets the image attach directly inside WhatsApp/Instagram/etc.).
+  Desktop browsers mostly don't support file-sharing via `navigator.share`,
+  so the fallback downloads the PNG and opens a prefilled `wa.me` text
+  link — the user has to attach the downloaded image manually in that
+  case. Devanagari/Gurmukhi glyph rendering on canvas depends on the
+  visitor's OS fonts, same caveat as the favicon generation.
+
 ## Gotchas (real, hit already)
 
 - **Vercel project name must be lowercase** — the folder is `HolyPlace`

@@ -1,13 +1,15 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { useLang } from "../context/LangContext";
 import { religions } from "../data/religions";
 import SearchBox from "./SearchBox";
 import LangSwitcher from "./LangSwitcher";
+import FontSizeControl from "./FontSizeControl";
 
 export default function Layout() {
   const { theme, toggleTheme } = useTheme();
   const { t } = useLang();
+  const location = useLocation();
 
   return (
     <div className="app-shell">
@@ -23,12 +25,13 @@ export default function Layout() {
           ))}
         </nav>
         <SearchBox />
+        <FontSizeControl />
         <LangSwitcher />
-        <button className="theme-toggle" onClick={toggleTheme} aria-label={t("toggle_theme")} title={t("toggle_theme")}>
+        <button className="theme-toggle no-print" onClick={toggleTheme} aria-label={t("toggle_theme")} title={t("toggle_theme")}>
           {theme === "light" ? "🌙" : "☀️"}
         </button>
       </header>
-      <main>
+      <main key={location.pathname} className="page-transition">
         <Outlet />
       </main>
       <footer className="site-footer">

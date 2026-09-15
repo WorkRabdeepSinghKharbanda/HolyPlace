@@ -1,6 +1,7 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { getFigure, getReligion } from "../data/religions";
 import Seo from "../components/Seo";
+import Breadcrumb from "../components/Breadcrumb";
 import { useLang } from "../context/LangContext";
 
 export default function FigurePage() {
@@ -11,18 +12,21 @@ export default function FigurePage() {
 
   if (!religion || !figure) return <Navigate to="/" replace />;
 
+  const breadcrumb = [
+    { name: "Home", path: "/" },
+    { name: religion.name, path: `/${religion.id}` },
+    { name: figure.name, path: `/${religion.id}/${figure.id}` },
+  ];
+
   return (
     <div>
       <Seo
         title={`${figure.name} — Mantra, Aarti & Chalisa — HolyPlace`}
         description={`All chants for ${figure.name}, ${figure.epithet}: ${figure.chants.map((c) => c.typeLabel).join(", ")}, in ${religion.script} with English translation.`}
         path={`/${religion.id}/${figure.id}`}
-        breadcrumb={[
-          { name: "Home", path: "/" },
-          { name: religion.name, path: `/${religion.id}` },
-          { name: figure.name, path: `/${religion.id}/${figure.id}` },
-        ]}
+        breadcrumb={breadcrumb}
       />
+      <Breadcrumb items={breadcrumb} />
       <Link to={`/${religion.id}`} className="back-link">
         {t("back_all_of", { name: religion.name })}
       </Link>
