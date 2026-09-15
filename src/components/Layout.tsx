@@ -24,12 +24,14 @@ export default function Layout() {
             </NavLink>
           ))}
         </nav>
-        <SearchBox />
-        <FontSizeControl />
-        <LangSwitcher />
-        <button className="theme-toggle no-print" onClick={toggleTheme} aria-label={t("toggle_theme")} title={t("toggle_theme")}>
-          {theme === "light" ? "🌙" : "☀️"}
-        </button>
+        <div className="header-controls">
+          <SearchBox />
+          <FontSizeControl />
+          <LangSwitcher />
+          <button className="theme-toggle no-print" onClick={toggleTheme} aria-label={t("toggle_theme")} title={t("toggle_theme")}>
+            {theme === "light" ? "🌙" : "☀️"}
+          </button>
+        </div>
       </header>
       <main key={location.pathname} className="page-transition">
         <Outlet />

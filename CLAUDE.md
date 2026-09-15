@@ -180,3 +180,15 @@ don't (multi-line native text is self-contained).
   meta (title, description, OG tags) will only ever be `index.html`'s static
   head unless SSR/prerendering is added. Non-JS crawlers see one generic
   head for every route, not per-deity content.
+- **`overflow-x: auto` on a flex item needs `min-width: 0`** — the mobile
+  header nav (`.nav-links` inside the `@media (max-width: 640px)` block in
+  `index.css`) is a horizontally-scrolling strip inside a column-direction
+  flex header. Without `min-width: 0` (plus explicit `width: 100%`), the
+  flex item refused to shrink below its content's intrinsic width and
+  pushed past the viewport instead of clipping/scrolling — classic
+  flexbox default (`min-width: auto`) fighting an overflow container.
+  Caught by an actual headless-browser check (Playwright, temp-installed
+  and removed, `document.documentElement.scrollWidth` vs `clientWidth`
+  across 375/390/360px viewports), not by reading the CSS — the bug wasn't
+  visible from the stylesheet alone. Re-run a similar check after touching
+  `.site-header`/`.nav-links` layout.
