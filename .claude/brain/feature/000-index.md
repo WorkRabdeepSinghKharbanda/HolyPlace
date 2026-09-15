@@ -4,5 +4,7 @@
 
 | # | Route | Description |
 |---|-------|-------------|
-| [001](001-home.md) | `/` | Deity grid, links into each deity page |
-| [002](002-deity-page.md) | `/deity/:id` | Mantra + aarti for one deity, with English-translation toggle |
+| [001](001-home.md) | `/` | Religion/tradition grid |
+| [002](002-religion-page.md) | `/:religionId` | Figure grid within one tradition |
+| [003](003-figure-page.md) | `/:religionId/:figureId` | Chant grid for one figure (mantra/aarti/chalisa/etc.) |
+| [004](004-chant-page.md) | `/:religionId/:figureId/:chantId` | Full chant text with translation toggle |

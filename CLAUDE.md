@@ -6,41 +6,61 @@ New session in this repo — read in this order before doing anything else:
 
 # HolyPlace
 
-Personal devotional site: Hindu deity aarti and mantra chants, Devanagari text
-with toggleable English translation, gold-themed light/dark UI.
+Personal devotional site: chants across religious traditions (Hinduism,
+Sikhism, Christianity) — mantra, aarti, chalisa, prayer — in the original
+script with toggleable English translation, gold-themed light/dark UI.
 
 ## Stack
 
 React 19 + TypeScript, Vite build, React Router (client-side, no SSR/SSG).
-No backend — all content lives in `src/data/deities.ts`. Deployed to Vercel
-via CLI (`npx vercel --prod --yes`), not git-integrated.
+No backend — all content lives in `src/data/religions.ts`. Deployed to
+Vercel via CLI (`npx vercel --prod --yes`), not git-integrated.
+
+## Content model
+
+`religions.ts` is a 3-level tree: `Religion` (e.g. Hinduism) → `Figure`
+(e.g. Ganesha, Waheguru, Jesus Christ) → `Chant` (e.g. mantra, aarti,
+chalisa, prayer, shabad — the `type`/`typeLabel` fields drive the card
+label). A figure can have any number of chants; the figure page renders
+one card per chant, so adding a new chant to an existing figure is just
+appending to its `chants` array — no route or page change needed. Adding a
+whole new religion or figure is the same: append to the array, nav/routes
+follow automatically.
+
+`Verse.translit` is optional — mantras use it (single verse, Devanagari +
+transliteration + meaning), longer aarti/chalisa/prayer texts generally
+don't (multi-line native text is self-contained).
 
 ## Folder structure
 
-- `src/data/deities.ts` — single source of truth for all deity content
-  (mantra + aarti verses, Devanagari + English). Add a new deity by appending
-  an entry here; the route and nav link are generated from this array, not
-  hardcoded.
+- `src/data/religions.ts` — single source of truth for all content.
 - `src/context/ThemeContext.tsx` — light/dark theme, persisted to
   `localStorage` under `holyplace-theme`, defaults to OS preference.
 - `src/components/Layout.tsx` — header/nav/footer shell, renders `<Outlet/>`.
-  Nav links are generated from `deities` array.
-- `src/pages/Home.tsx` — grid of deity cards linking to `/deity/:id`.
-- `src/pages/DeityPage.tsx` — reads `:id` from route, looks up the deity via
-  `getDeity()`, renders mantra + aarti. Per-page English-translation toggle
-  is local `useState`, not global — each deity page starts with translation
-  shown.
-- `App.tsx` — route table. Two routes total: `/` and `/deity/:id`.
+  Nav links are generated from the `religions` array (top level only —
+  figures and chants are one level down, not in the nav).
+- `src/pages/Home.tsx` — grid of religion cards → `/:religionId`.
+- `src/pages/ReligionPage.tsx` — grid of figure cards → `/:religionId/:figureId`.
+- `src/pages/FigurePage.tsx` — grid of chant cards (the "more chants" view)
+  → `/:religionId/:figureId/:chantId`.
+- `src/pages/ChantPage.tsx` — full text of one chant, with a local
+  (non-global) English-translation toggle.
+- `App.tsx` — route table: `/`, `/:religionId`, `/:religionId/:figureId`,
+  `/:religionId/:figureId/:chantId`.
 
 ## Control flow
 
 1. `main.tsx` wraps the app in `ThemeProvider` then `BrowserRouter`.
-2. `App.tsx` routes render inside `Layout`, which reads `deities` for nav.
-3. `DeityPage` resolves `id` → `getDeity(id)`; unknown id redirects to `/`.
-4. `vercel.json` rewrites all paths to `/index.html` so client routes
-   (`/deity/ganesha`) don't 404 on direct load/refresh in production — this
-   is a CSR SPA, so without this rewrite a hard refresh on any deity page
-   returns Vercel's 404.
+2. `App.tsx` routes render inside `Layout`, which reads `religions` for nav.
+3. Each page resolves its param(s) via `getReligion`/`getFigure`/`getChant`;
+   any unresolvable id at any level redirects to `/`.
+4. `vercel.json` rewrites all paths to `/index.html` so client routes don't
+   404 on direct load/refresh in production — this is a CSR SPA, so without
+   this rewrite a hard refresh on any nested page returns Vercel's 404.
+5. `scripts/gen-seo.mjs` walks the same `religions` tree to regenerate
+   `public/sitemap.xml` and `public/llms.txt` on every `prebuild` — these
+   can't drift from the real route list because they're generated from it,
+   not hand-maintained.
 
 ## Gotchas (real, hit already)
 

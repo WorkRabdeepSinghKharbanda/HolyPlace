@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
-import { deities } from "../data/deities";
+import { religions } from "../data/religions";
 
 export default function Layout() {
   const { theme, toggleTheme } = useTheme();
@@ -12,9 +12,9 @@ export default function Layout() {
           🕉 HolyPlace
         </NavLink>
         <nav className="nav-links">
-          {deities.map((d) => (
-            <NavLink key={d.id} to={`/deity/${d.id}`} className={({ isActive }) => (isActive ? "active" : "")}>
-              {d.name}
+          {religions.map((r) => (
+            <NavLink key={r.id} to={`/${r.id}`} className={({ isActive }) => (isActive ? "active" : "")}>
+              {r.name}
             </NavLink>
           ))}
         </nav>
