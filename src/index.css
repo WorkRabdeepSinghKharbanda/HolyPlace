@@ -1,0 +1,279 @@
+:root {
+  --gold: #c9a24b;
+  --gold-bright: #e6c877;
+  --bg: #faf6ee;
+  --bg-alt: #f2e9d5;
+  --surface: #ffffff;
+  --text: #2b2117;
+  --text-muted: #6b5f4e;
+  --border: #e3d5b8;
+  --shadow: 0 10px 30px rgba(120, 90, 30, 0.12);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --gold: #d8b45f;
+  --gold-bright: #f0d18a;
+  --bg: #14110c;
+  --bg-alt: #1d1811;
+  --surface: #221c14;
+  --text: #f2e9d5;
+  --text-muted: #b8a988;
+  --border: #3a3122;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Georgia", "Iowan Old Style", serif;
+  background: radial-gradient(circle at top, var(--bg-alt), var(--bg));
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--gold);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--gold);
+}
+
+.nav-links a.active {
+  color: var(--text);
+  background: var(--bg-alt);
+  font-weight: bold;
+}
+
+.theme-toggle {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+main {
+  flex: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+}
+
+.site-footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Home */
+.hero {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.hero h1 {
+  color: var(--gold);
+  font-size: 2.4rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.02em;
+}
+
+.hero p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+.deity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+
+.deity-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.deity-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+}
+
+.deity-card .sanskrit {
+  font-size: 1.8rem;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.deity-card .name {
+  font-weight: bold;
+  display: block;
+}
+
+.deity-card .epithet {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* Deity page */
+.deity-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.deity-header .sanskrit-big {
+  font-size: 3rem;
+  color: var(--gold);
+  display: block;
+}
+
+.deity-header h1 {
+  margin: 0.25rem 0;
+}
+
+.deity-header .epithet {
+  color: var(--text-muted);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  margin-top: 0;
+  color: var(--gold);
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+.translate-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--text);
+  float: right;
+}
+
+.translate-toggle.on {
+  background: var(--gold);
+  color: #24190a;
+  border-color: var(--gold);
+}
+
+.mantra-devanagari {
+  font-size: 1.6rem;
+  color: var(--gold-bright);
+  margin: 0.5rem 0;
+}
+
+.mantra-translit {
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.verse {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.verse:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.verse .hi {
+  white-space: pre-line;
+  font-size: 1.15rem;
+  line-height: 1.8;
+}
+
+.verse .en {
+  white-space: pre-line;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: var(--gold);
+}
