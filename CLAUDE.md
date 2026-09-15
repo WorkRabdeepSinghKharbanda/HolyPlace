@@ -39,6 +39,11 @@ don't (multi-line native text is self-contained).
 - `src/components/Layout.tsx` — header/nav/footer shell, renders `<Outlet/>`.
   Nav links are generated from the `religions` array (top level only —
   figures and chants are one level down, not in the nav).
+- `src/components/SearchBox.tsx` — global search in the header. Builds a
+  flat in-memory index (figure name/native name/epithet + every chant
+  title/native title/type/religion) from `religions` once at module load,
+  filters client-side on keystroke, no debounce needed at this data size.
+  Not a route — lives on every page via `Layout`.
 - `src/pages/Home.tsx` — grid of religion cards → `/:religionId`.
 - `src/pages/ReligionPage.tsx` — grid of figure cards → `/:religionId/:figureId`.
 - `src/pages/FigurePage.tsx` — grid of chant cards (the "more chants" view)

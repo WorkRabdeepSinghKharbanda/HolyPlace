@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { religions } from "../data/religions";
+import SearchBox from "./SearchBox";
 
 export default function Layout() {
   const { theme, toggleTheme } = useTheme();
@@ -18,6 +19,7 @@ export default function Layout() {
             </NavLink>
           ))}
         </nav>
+        <SearchBox />
         <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme" title="Toggle theme">
           {theme === "light" ? "🌙" : "☀️"}
         </button>
