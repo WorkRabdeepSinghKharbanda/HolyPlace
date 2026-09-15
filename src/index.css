@@ -170,6 +170,17 @@ body {
   font-size: 0.85rem;
 }
 
+.lang-select {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.4rem 0.7rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
 .theme-toggle {
   background: var(--bg-alt);
   border: 1px solid var(--border);

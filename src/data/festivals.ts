@@ -17,6 +17,7 @@ export const festivals: Festival[] = [
   { name: "Holi", date: "2027-03-03", path: "/hinduism/krishna", note: "Festival of colors" },
   { name: "Ram Navami", date: "2027-04-05", path: "/hinduism/hanuman", note: "Birth of Rama, honored alongside Hanuman" },
   { name: "Janmashtami", date: "2027-08-24", path: "/hinduism/krishna", note: "Birth of Krishna" },
+  { name: "Buddha Purnima (Vesak)", date: "2027-05-01", path: "/buddhism/buddha", note: "Birth, enlightenment, and passing of the Buddha" },
 ];
 
 export function upcomingFestivals(from: Date = new Date(), count = 3): Festival[] {

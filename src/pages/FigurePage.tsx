@@ -1,11 +1,13 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { getFigure, getReligion } from "../data/religions";
 import Seo from "../components/Seo";
+import { useLang } from "../context/LangContext";
 
 export default function FigurePage() {
   const { religionId, figureId } = useParams();
   const religion = religionId ? getReligion(religionId) : undefined;
   const figure = religionId && figureId ? getFigure(religionId, figureId) : undefined;
+  const { t } = useLang();
 
   if (!religion || !figure) return <Navigate to="/" replace />;
 
@@ -22,7 +24,7 @@ export default function FigurePage() {
         ]}
       />
       <Link to={`/${religion.id}`} className="back-link">
-        ← All of {religion.name}
+        {t("back_all_of", { name: religion.name })}
       </Link>
 
       <div className="deity-header">

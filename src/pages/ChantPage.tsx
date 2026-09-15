@@ -9,6 +9,7 @@ import { useSpeech } from "../hooks/useSpeech";
 import { usePracticeStreak } from "../hooks/usePracticeStreak";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { supportsScriptToggle, transliterateFromNative } from "../lib/transliterate";
+import { useLang } from "../context/LangContext";
 
 const SPEECH_LANG: Record<string, string> = {
   Devanagari: "hi-IN",
@@ -25,6 +26,7 @@ export default function ChantPage() {
   const [reciting, setReciting] = useState(false);
   const [script, setScript] = useLocalStorage("holyplace-script", "native");
 
+  const { t } = useLang();
   const { isFavorite, toggleFavorite } = useFavorites();
   const { streak, doneToday, markDoneToday } = usePracticeStreak();
   const path = religion && figure && chant ? `/${religion.id}/${figure.id}/${chant.id}` : "";
@@ -59,7 +61,7 @@ export default function ChantPage() {
         ]}
       />
       <Link to={`/${religion.id}/${figure.id}`} className="back-link no-print">
-        ← All chants for {figure.name}
+        {t("back_all_chants_for", { name: figure.name })}
       </Link>
 
       <div className="deity-header">
@@ -84,25 +86,26 @@ export default function ChantPage() {
           className={`translate-toggle ${showTranslation ? "on" : ""}`}
           onClick={() => setShowTranslation((s) => !s)}
         >
-          🌐 {showTranslation ? "Hide" : "Show"} translation
+          🌐 {showTranslation ? t("chant_hide_translation") : t("chant_show_translation")}
         </button>
         <button className="toolbar-btn" onClick={() => toggleFavorite(path)}>
-          {isFavorite(path) ? "★ Favorited" : "☆ Favorite"}
+          {isFavorite(path) ? t("chant_favorited") : t("chant_favorite")}
         </button>
         {canToggleScript && <ScriptToggle value={script} onChange={setScript} />}
         {speechSupported && (
           <button className="toolbar-btn" onClick={speaking ? stop : play}>
-            {speaking ? "⏹ Stop" : "🔊 Listen"}
+            {speaking ? t("chant_stop") : t("chant_listen")}
           </button>
         )}
         <button className="toolbar-btn" onClick={() => setReciting(true)}>
-          📖 Recite mode
+          {t("chant_recite_mode")}
         </button>
         <button className="toolbar-btn" onClick={() => window.print()}>
-          🖨 Print
+          {t("chant_print")}
         </button>
         <button className="toolbar-btn" onClick={markDoneToday} disabled={doneToday}>
-          {doneToday ? `✓ Chanted today · streak ${streak}` : `Mark as chanted today${streak > 0 ? ` · streak ${streak}` : ""}`}
+          {doneToday ? t("chant_chanted_today") : t("chant_mark_chanted")}
+          {streak > 0 ? t("chant_streak", { n: streak }) : ""}
         </button>
       </div>
 

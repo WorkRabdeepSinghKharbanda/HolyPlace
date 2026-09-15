@@ -1,10 +1,13 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
+import { useLang } from "../context/LangContext";
 import { religions } from "../data/religions";
 import SearchBox from "./SearchBox";
+import LangSwitcher from "./LangSwitcher";
 
 export default function Layout() {
   const { theme, toggleTheme } = useTheme();
+  const { t } = useLang();
 
   return (
     <div className="app-shell">
@@ -20,7 +23,8 @@ export default function Layout() {
           ))}
         </nav>
         <SearchBox />
-        <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme" title="Toggle theme">
+        <LangSwitcher />
+        <button className="theme-toggle" onClick={toggleTheme} aria-label={t("toggle_theme")} title={t("toggle_theme")}>
           {theme === "light" ? "🌙" : "☀️"}
         </button>
       </header>
@@ -28,7 +32,7 @@ export default function Layout() {
         <Outlet />
       </main>
       <footer className="site-footer">
-        <p>Aarti & mantra texts are shared devotionally in the traditional public domain.</p>
+        <p>{t("footer_text")}</p>
       </footer>
     </div>
   );

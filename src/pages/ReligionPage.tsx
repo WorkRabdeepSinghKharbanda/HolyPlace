@@ -1,10 +1,12 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { getReligion } from "../data/religions";
 import Seo from "../components/Seo";
+import { useLang } from "../context/LangContext";
 
 export default function ReligionPage() {
   const { religionId } = useParams();
   const religion = religionId ? getReligion(religionId) : undefined;
+  const { t } = useLang();
 
   if (!religion) return <Navigate to="/" replace />;
 
@@ -20,7 +22,7 @@ export default function ReligionPage() {
         ]}
       />
       <Link to="/" className="back-link">
-        ← All traditions
+        {t("back_all_traditions")}
       </Link>
 
       <div className="deity-header">

@@ -105,6 +105,28 @@ don't (multi-line native text is self-contained).
   import — confirmed by grepping the bundled file — so it's unreachable
   from our code.
 
+## More traditions, reminders, UI language
+
+- **Buddhism** — third tradition after Hinduism/Sikhism, one figure
+  (Buddha) with the Ti-Sarana refuge formula, Om Mani Padme Hum, and the
+  Heart Sutra's closing mantra. Script is "Devanagari" (how Pali chants are
+  conventionally rendered in Indian print), which means the regional
+  script toggle works on Buddhist chants for free.
+- **Daily reminder** (`src/hooks/useReminder.ts`, UI in
+  `src/components/ReminderWidget.tsx`) — NOT a real push notification.
+  There's no backend push server, so it only fires via `Notification` API
+  while this site is open in a tab (polled every 30s). A true
+  "notify-even-when-closed" reminder needs web-push + a server to hold
+  subscriptions — a real infra addition, not something a static site can
+  do alone. This is documented in the hook's own comment too.
+- **UI language switcher** (`src/i18n/translations.ts` +
+  `src/context/LangContext.tsx`) — English/Hindi/Spanish, chrome text only
+  (buttons, headers, footer). Chant/mantra/prayer content is never
+  translated by this system — the English translation shown per-chant is
+  content, authored in `religions.ts`, not swapped by the language
+  selector. Adding a language means adding one object to `translations.ts`
+  with every key `en` has; TypeScript enforces the key set matches.
+
 ## Gotchas (real, hit already)
 
 - **Vercel project name must be lowercase** — the folder is `HolyPlace`

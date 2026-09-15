@@ -4,6 +4,8 @@ import { allOccasions, chantByPath, chantsByOccasion, dailyChant } from "../data
 import { upcomingFestivals } from "../data/festivals";
 import { useFavorites } from "../hooks/useFavorites";
 import Seo from "../components/Seo";
+import ReminderWidget from "../components/ReminderWidget";
+import { useLang } from "../context/LangContext";
 
 export default function Home() {
   const [searchParams] = useSearchParams();
@@ -11,6 +13,7 @@ export default function Home() {
   const { favorites } = useFavorites();
   const daily = dailyChant();
   const festivals = upcomingFestivals();
+  const { t } = useLang();
 
   return (
     <div>
@@ -22,12 +25,12 @@ export default function Home() {
       />
       <div className="hero">
         <h1>HolyPlace</h1>
-        <p>Devotional chants across traditions, with English translation.</p>
+        <p>{t("home_subtitle")}</p>
       </div>
 
       {occasion ? (
         <section className="home-section">
-          <h2>Chants for "{occasion}"</h2>
+          <h2>{t("home_chants_for", { occasion })}</h2>
           <div className="deity-grid">
             {chantsByOccasion(occasion).map((e) => (
               <Link key={e.path} to={e.path} className="deity-card">
@@ -38,18 +41,18 @@ export default function Home() {
                 <span className="epithet">{e.chant.title}</span>
               </Link>
             ))}
-            {chantsByOccasion(occasion).length === 0 && <p className="epithet">No chants tagged for this yet.</p>}
+            {chantsByOccasion(occasion).length === 0 && <p className="epithet">{t("home_no_chants_tagged")}</p>}
           </div>
           <p style={{ marginTop: "1rem" }}>
             <Link to="/" className="back-link" style={{ margin: 0 }}>
-              ← Clear filter
+              {t("home_clear_filter")}
             </Link>
           </p>
         </section>
       ) : (
         <>
           <section className="home-section">
-            <h2>Chant of the day</h2>
+            <h2>{t("home_chant_of_day")}</h2>
             <Link to={daily.path} className="deity-card" style={{ display: "block", maxWidth: 360 }}>
               <span className="epithet" style={{ color: daily.religionColor, fontWeight: "bold" }}>
                 {daily.chant.typeLabel} · {daily.religionName}
@@ -59,9 +62,14 @@ export default function Home() {
             </Link>
           </section>
 
+          <section className="home-section">
+            <h2>{t("home_reminder_title")}</h2>
+            <ReminderWidget />
+          </section>
+
           {favorites.length > 0 && (
             <section className="home-section">
-              <h2>Your favorites</h2>
+              <h2>{t("home_favorites")}</h2>
               <div className="deity-grid">
                 {favorites.map((path) => {
                   const entry = chantByPath(path);
@@ -81,7 +89,7 @@ export default function Home() {
           )}
 
           <section className="home-section">
-            <h2>Upcoming festivals</h2>
+            <h2>{t("home_upcoming_festivals")}</h2>
             <ul className="festival-list">
               {festivals.map((f) => (
                 <li key={f.name}>
@@ -95,7 +103,7 @@ export default function Home() {
           </section>
 
           <section className="home-section">
-            <h2>Browse by occasion</h2>
+            <h2>{t("home_browse_occasion")}</h2>
             <div className="occasion-chip-row">
               {allOccasions.map((o) => (
                 <Link key={o} to={`/?occasion=${encodeURIComponent(o)}`} className="occasion-chip">
@@ -106,7 +114,7 @@ export default function Home() {
           </section>
 
           <section className="home-section">
-            <h2>Traditions</h2>
+            <h2>{t("home_traditions")}</h2>
             <div className="deity-grid">
               {religions.map((r) => (
                 <Link key={r.id} to={`/${r.id}`} className="deity-card" style={{ borderColor: "transparent" }}>

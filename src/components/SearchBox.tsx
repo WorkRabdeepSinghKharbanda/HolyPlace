@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { religions } from "../data/religions";
 import { chantIndex } from "../data/chantIndex";
+import { useLang } from "../context/LangContext";
 
 interface SearchEntry {
   path: string;
@@ -36,6 +37,7 @@ export default function SearchBox() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
+  const { t } = useLang();
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -55,7 +57,7 @@ export default function SearchBox() {
       <input
         ref={inputRef}
         type="search"
-        placeholder="Search deity, chant, or script…"
+        placeholder={t("search_placeholder")}
         value={query}
         onChange={(e) => {
           setQuery(e.target.value);
@@ -71,7 +73,7 @@ export default function SearchBox() {
       {open && query.trim() !== "" && (
         <ul className="search-results">
           {results.length === 0 ? (
-            <li className="search-empty">No matches for "{query}"</li>
+            <li className="search-empty">{t("search_no_matches", { q: query })}</li>
           ) : (
             results.map((r) => (
               <li key={r.path}>

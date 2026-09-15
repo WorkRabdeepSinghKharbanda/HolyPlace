@@ -924,6 +924,68 @@ export const religions: Religion[] = [
       },
     ],
   },
+  {
+    id: "buddhism",
+    name: "Buddhism",
+    tagline: "Refuge, mantra, and sutra of the Awakened One",
+    color: "#c1622a",
+    script: "Devanagari",
+    figures: [
+      {
+        id: "buddha",
+        name: "Buddha",
+        nativeName: "बुद्ध",
+        epithet: "The Awakened One",
+        chants: [
+          {
+            id: "trisarana",
+            type: "mantra",
+            typeLabel: "Refuge Formula",
+            title: "Tisarana — The Three Refuges",
+            nativeTitle: "त्रिशरण",
+            occasions: ["devotion", "daily practice", "new beginnings"],
+            verses: [
+              {
+                hi: "बुद्धं शरणं गच्छामि।\nधम्मं शरणं गच्छामि।\nसंघं शरणं गच्छामि॥",
+                translit: "Buddham Saranam Gacchami, Dhammam Saranam Gacchami, Sangham Saranam Gacchami",
+                en: "I go to the Buddha for refuge. I go to the Dhamma (the teaching) for refuge. I go to the Sangha (the community) for refuge.",
+              },
+            ],
+          },
+          {
+            id: "om-mani-padme-hum",
+            type: "mantra",
+            typeLabel: "Mantra",
+            title: "Om Mani Padme Hum",
+            nativeTitle: "ॐ मणि पद्मे हूँ",
+            occasions: ["compassion", "peace", "protection"],
+            verses: [
+              {
+                hi: "ॐ मणि पद्मे हूँ",
+                translit: "Om Mani Padme Hum",
+                en: "The mantra of Avalokiteshvara, the bodhisattva of compassion — traditionally rendered \"the jewel is in the lotus,\" invoking compassion for all beings.",
+              },
+            ],
+          },
+          {
+            id: "heart-sutra-mantra",
+            type: "mantra",
+            typeLabel: "Sutra Mantra",
+            title: "Heart Sutra — Closing Mantra",
+            nativeTitle: "गते गते पारगते",
+            occasions: ["wisdom", "letting go"],
+            verses: [
+              {
+                hi: "गते गते पारगते पारसंगते बोधि स्वाहा॥",
+                translit: "Gate Gate Paragate Parasamgate Bodhi Svaha",
+                en: "Gone, gone, gone beyond, gone completely beyond, awakening, so be it — the closing mantra of the Heart Sutra (Prajnaparamita Hridaya).",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export const getReligion = (id: string) => religions.find((r) => r.id === id);

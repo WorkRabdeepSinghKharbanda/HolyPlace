@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Verse } from "../data/religions";
+import { useLang } from "../context/LangContext";
 
 interface ReciteModeProps {
   verses: Verse[];
@@ -10,6 +11,7 @@ interface ReciteModeProps {
 export default function ReciteMode({ verses, showTranslation, onClose }: ReciteModeProps) {
   const [index, setIndex] = useState(0);
   const verse = verses[index];
+  const { t } = useLang();
 
   return (
     <div className="recite-overlay">
@@ -23,13 +25,13 @@ export default function ReciteMode({ verses, showTranslation, onClose }: ReciteM
       </div>
       <div className="recite-nav">
         <button disabled={index === 0} onClick={() => setIndex((i) => i - 1)}>
-          ← Prev
+          {t("recite_prev")}
         </button>
         <span>
           {index + 1} / {verses.length}
         </span>
         <button disabled={index === verses.length - 1} onClick={() => setIndex((i) => i + 1)}>
-          Next →
+          {t("recite_next")}
         </button>
       </div>
     </div>

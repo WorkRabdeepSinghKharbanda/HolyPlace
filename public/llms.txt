@@ -64,3 +64,11 @@
   - [Psalm 23 — The Lord Is My Shepherd](https://holyplace.vercel.app/christianity/jesus/psalm-23): Psalm for Jesus Christ, "Dominus Regit Me", Latin with English translation.
 - [Virgin Mary](https://holyplace.vercel.app/christianity/mary): Mother of God. Chants: Prayer.
   - [Hail Mary](https://holyplace.vercel.app/christianity/mary/hail-mary): Prayer for Virgin Mary, "Ave Maria", Latin with English translation.
+
+## Buddhism
+
+- [Buddhism overview](https://holyplace.vercel.app/buddhism): Refuge, mantra, and sutra of the Awakened One.
+- [Buddha](https://holyplace.vercel.app/buddhism/buddha): The Awakened One. Chants: Refuge Formula, Mantra, Sutra Mantra.
+  - [Tisarana — The Three Refuges](https://holyplace.vercel.app/buddhism/buddha/trisarana): Refuge Formula for Buddha, "त्रिशरण", Devanagari with English translation.
+  - [Om Mani Padme Hum](https://holyplace.vercel.app/buddhism/buddha/om-mani-padme-hum): Mantra for Buddha, "ॐ मणि पद्मे हूँ", Devanagari with English translation.
+  - [Heart Sutra — Closing Mantra](https://holyplace.vercel.app/buddhism/buddha/heart-sutra-mantra): Sutra Mantra for Buddha, "गते गते पारगते", Devanagari with English translation.
