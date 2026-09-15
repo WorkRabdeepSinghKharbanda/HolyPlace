@@ -2,9 +2,7 @@ New session in this repo — read in this order before doing anything else:
 1. This file (CLAUDE.md).
 2. Everything in .claude/rules/ (branching.md, brain-sync.md, any others).
 3. .claude/brain/feature/000-index.md — full feature/route inventory.
-4. .claude/docs/features.md and .claude/docs/gotchas.md — feature
-   implementation notes and real bugs hit, kept out of this file so it
-   stays a short architecture overview rather than a growing feature log.
+4. .claude/docs/features.md and .claude/docs/gotchas.md — feature implementation notes and real bugs hit, kept out of this file so it stays a short architecture overview rather than a growing feature log.
 5. Only then start the task.
 
 # HolyPlace
