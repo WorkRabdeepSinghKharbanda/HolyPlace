@@ -1,0 +1,15 @@
+# HolyPlace
+
+> Aarti and mantra chants for the Hindu deities, in Devanagari with English translation. Client-rendered React app — routes below only render after JavaScript executes; non-JS crawlers see only this file and the static index.html head.
+
+## Pages
+
+- [Home](https://holyplace.vercel.app/): Grid linking to every deity's aarti and mantra page.
+- [Ganesha](https://holyplace.vercel.app/deity/ganesha): Remover of Obstacles. Mantra "Om Gam Ganapataye Namah" and the "Jai Ganesh Aarti" aarti, Devanagari with English translation.
+- [Shiva](https://holyplace.vercel.app/deity/shiva): The Auspicious One. Mantra "Om Namah Shivaya" and the "Om Jai Shiv Omkara" aarti, Devanagari with English translation.
+- [Vishnu](https://holyplace.vercel.app/deity/vishnu): The Preserver. Mantra "Om Namo Narayanaya" and the "Om Jai Jagdish Hare" aarti, Devanagari with English translation.
+- [Lakshmi](https://holyplace.vercel.app/deity/lakshmi): Goddess of Wealth and Prosperity. Mantra "Om Shreem Mahalakshmyai Namah" and the "Om Jai Lakshmi Mata" aarti, Devanagari with English translation.
+- [Durga](https://holyplace.vercel.app/deity/durga): The Invincible Mother. Mantra "Om Dum Durgayai Namah" and the "Jai Ambe Gauri" aarti, Devanagari with English translation.
+- [Saraswati](https://holyplace.vercel.app/deity/saraswati): Goddess of Knowledge and Arts. Mantra "Om Aim Saraswatyai Namah" and the "Jai Saraswati Mata" aarti, Devanagari with English translation.
+- [Hanuman](https://holyplace.vercel.app/deity/hanuman): The Devoted Protector. Mantra "Om Han Hanumate Namah" and the "Aarti Kije Hanuman Lala Ki" aarti, Devanagari with English translation.
+- [Krishna](https://holyplace.vercel.app/deity/krishna): The Divine Charioteer. Mantra "Om Namo Bhagavate Vasudevaya" and the "Aarti Kunj Bihari Ki" aarti, Devanagari with English translation.

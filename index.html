@@ -2,10 +2,62 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Google Analytics (GA4). Placeholder ID — swap G-XXXXXXXXXX for your real
+         Measurement ID from analytics.google.com (Admin > Data Streams > your stream). -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <!-- Google Search Console (HTML tag method, URL-prefix property). Placeholder —
+         swap for the real content value shown at search.google.com/search-console
+         when you add this property with the "HTML tag" verification method. -->
+    <meta name="google-site-verification" content="REPLACE_WITH_GSC_TOKEN" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Aarti and mantra chants for the Hindu deities, in Devanagari with English translation." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://holyplace.vercel.app/" />
     <title>HolyPlace — Aarti & Mantra Chants</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#c9a24b" />
+
+    <!-- Open Graph / Twitter (static fallback for the home route; per-route pages
+         override these client-side via src/components/Seo.tsx — see the CSR note
+         in CLAUDE.md: crawlers that don't run JS only ever see these values). -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="HolyPlace" />
+    <meta property="og:title" content="HolyPlace — Aarti & Mantra Chants" />
+    <meta property="og:description" content="Aarti and mantra chants for the Hindu deities, in Devanagari with English translation." />
+    <meta property="og:url" content="https://holyplace.vercel.app/" />
+    <meta property="og:image" content="https://holyplace.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HolyPlace — Aarti & Mantra Chants" />
+    <meta name="twitter:description" content="Aarti and mantra chants for the Hindu deities, in Devanagari with English translation." />
+    <meta name="twitter:image" content="https://holyplace.vercel.app/og-image.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "HolyPlace",
+        "url": "https://holyplace.vercel.app/"
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

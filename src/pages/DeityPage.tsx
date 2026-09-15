@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { getDeity } from "../data/deities";
+import Seo from "../components/Seo";
 
 export default function DeityPage() {
   const { id } = useParams();
@@ -11,6 +12,15 @@ export default function DeityPage() {
 
   return (
     <div>
+      <Seo
+        title={`${deity.name} Aarti & Mantra — HolyPlace`}
+        description={`${deity.mantra.transliteration}. ${deity.aarti.title} for ${deity.name}, ${deity.epithet}, in Devanagari with English translation.`}
+        path={`/deity/${deity.id}`}
+        breadcrumb={[
+          { name: "Home", path: "/" },
+          { name: deity.name, path: `/deity/${deity.id}` },
+        ]}
+      />
       <Link to="/" className="back-link">
         ← All deities
       </Link>

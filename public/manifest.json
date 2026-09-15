@@ -1,0 +1,13 @@
+{
+  "name": "HolyPlace — Aarti & Mantra Chants",
+  "short_name": "HolyPlace",
+  "description": "Aarti and mantra chants for the Hindu deities, in Devanagari with English translation.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#14110c",
+  "theme_color": "#c9a24b",
+  "icons": [
+    { "src": "/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
