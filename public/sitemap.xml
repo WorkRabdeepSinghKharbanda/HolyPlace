@@ -103,6 +103,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://holyplace.vercel.app/hinduism/lakshmi/namastestu</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://holyplace.vercel.app/hinduism/lakshmi/aarti</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>yearly</changefreq>
@@ -122,6 +128,12 @@
   </url>
   <url>
     <loc>https://holyplace.vercel.app/hinduism/durga/gayatri</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://holyplace.vercel.app/hinduism/durga/ya-devi</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
@@ -200,6 +212,42 @@
   </url>
   <url>
     <loc>https://holyplace.vercel.app/hinduism/krishna/aarti</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://holyplace.vercel.app/hinduism/kali</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://holyplace.vercel.app/hinduism/kali/mantra</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://holyplace.vercel.app/hinduism/kali/dhyana-shloka</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://holyplace.vercel.app/hinduism/parvati</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://holyplace.vercel.app/hinduism/parvati/mantra</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://holyplace.vercel.app/hinduism/parvati/sarvamangala</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>

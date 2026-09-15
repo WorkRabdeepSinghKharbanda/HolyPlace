@@ -286,6 +286,20 @@ export const religions: Religion[] = [
             ],
           },
           {
+            id: "namastestu",
+            type: "stotra",
+            typeLabel: "Shloka",
+            title: "Namastestu Mahamaye",
+            nativeTitle: "नमस्तेस्तु महामाये",
+            verses: [
+              {
+                hi: "नमस्तेस्तु महामाये श्रीपीठे सुरपूजिते।\nशङ्खचक्रगदाहस्ते महालक्ष्मि नमोऽस्तु ते॥",
+                translit: "Namaste'stu Mahamaye Shreepeethe Surapoojite, Shankhachakragadahaste Mahalakshmi Namo'stu Te",
+                en: "Salutations to you, O great illusion, seated on the throne of Shri, worshipped by the gods; bearer of the conch, discus, and mace, O Mahalakshmi, salutations to you.",
+              },
+            ],
+          },
+          {
             id: "aarti",
             type: "aarti",
             typeLabel: "Aarti",
@@ -351,6 +365,20 @@ export const religions: Religion[] = [
                 hi: "ॐ गिरिजायै च विद्महे शिवप्रियायै च धीमहि।\nतन्नो दुर्गा प्रचोदयात्॥",
                 translit: "Om Girijayai Cha Vidmahe Shivapriyayai Cha Dhimahi, Tanno Durga Prachodayat",
                 en: "We meditate on the daughter of the mountains, beloved of Shiva. May that Durga inspire and guide us.",
+              },
+            ],
+          },
+          {
+            id: "ya-devi",
+            type: "stotra",
+            typeLabel: "Shloka",
+            title: "Ya Devi Sarvabhuteshu",
+            nativeTitle: "या देवी सर्वभूतेषु",
+            verses: [
+              {
+                hi: "या देवी सर्वभूतेषु शक्तिरूपेण संस्थिता।\nनमस्तस्यै नमस्तस्यै नमस्तस्यै नमो नमः॥",
+                translit: "Ya Devi Sarvabhuteshu Shaktirupena Samsthita, Namastasyai Namastasyai Namastasyai Namo Namah",
+                en: "To the Goddess who abides in all beings in the form of power, salutations to her, salutations to her, salutations to her, again and again we bow.",
               },
             ],
           },
@@ -670,6 +698,78 @@ export const religions: Religion[] = [
               {
                 hi: "आरती कुंजबिहारी की, श्री गिरधर कृष्ण मुरारी की॥",
                 en: "Aarti to the one who plays in the groves of Vrindavan, to Krishna, Murari, the lifter of the mountain.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "kali",
+        name: "Kali",
+        nativeName: "काली",
+        epithet: "The Fierce Mother of Time and Transformation",
+        chants: [
+          {
+            id: "mantra",
+            type: "mantra",
+            typeLabel: "Mantra",
+            title: "Kali Mantra",
+            nativeTitle: "काली मंत्र",
+            verses: [
+              {
+                hi: "ॐ क्रीं कालिकायै नमः",
+                translit: "Om Kreem Kalikayai Namah",
+                en: "I bow to Kali, the fierce and compassionate goddess of time and transformation.",
+              },
+            ],
+          },
+          {
+            id: "dhyana-shloka",
+            type: "stotra",
+            typeLabel: "Dhyana Shloka",
+            title: "Karalavadanam Dhyana Shloka",
+            nativeTitle: "करालवदनां ध्यान श्लोक",
+            verses: [
+              {
+                hi: "करालवदनां घोरां मुक्तकेशीं चतुर्भुजाम्।\nकालिकां दक्षिणां दिव्यां मुण्डमालाविभूषिताम्॥",
+                translit: "Karalavadanam Ghoram Muktakeshim Chaturbhujam, Kalikam Dakshinam Divyam Mundamalavibhushitam",
+                en: "Terrifying of face, fierce, with hair unbound, four-armed; the divine Dakshina Kalika, adorned with a garland of skulls.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "parvati",
+        name: "Parvati",
+        nativeName: "पार्वती",
+        epithet: "Daughter of the Mountains, Mother of the Universe",
+        chants: [
+          {
+            id: "mantra",
+            type: "mantra",
+            typeLabel: "Mantra",
+            title: "Parvati Mantra",
+            nativeTitle: "पार्वती मंत्र",
+            verses: [
+              {
+                hi: "ॐ पार्वत्यै नमः",
+                translit: "Om Parvatyai Namah",
+                en: "I bow to Parvati, daughter of the mountains, beloved consort of Shiva and mother of the universe.",
+              },
+            ],
+          },
+          {
+            id: "sarvamangala",
+            type: "stotra",
+            typeLabel: "Shloka",
+            title: "Sarvamangala Mangalye",
+            nativeTitle: "सर्वमंगलमांगल्ये",
+            verses: [
+              {
+                hi: "सर्वमंगलमांगल्ये शिवे सर्वार्थसाधिके।\nशरण्ये त्र्यम्बके गौरि नारायणि नमोऽस्तु ते॥",
+                translit: "Sarvamangala Mangalye Shive Sarvarthasadhike, Sharanye Tryambake Gauri Narayani Namo'stu Te",
+                en: "O auspicious one, bringer of all auspiciousness, accomplisher of all goals, giver of refuge, three-eyed Gauri, Narayani, salutations to you.",
               },
             ],
           },
