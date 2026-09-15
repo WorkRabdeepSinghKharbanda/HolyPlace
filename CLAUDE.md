@@ -67,6 +67,36 @@ don't (multi-line native text is self-contained).
    can't drift from the real route list because they're generated from it,
    not hand-maintained.
 
+## User-facing features beyond the core read view
+
+- **Favorites** (`src/hooks/useFavorites.ts`) — array of chant paths in
+  `localStorage["holyplace-favorites"]`.
+- **Practice streak** (`src/hooks/usePracticeStreak.ts`) — one global streak
+  for the whole site (`localStorage["holyplace-streak"]`), not per-chant.
+  "Chanted today" on any chant advances it.
+- **Listen** (`src/hooks/useSpeech.ts`) — browser `SpeechSynthesis`, not
+  recorded audio. Voice/pronunciation quality depends entirely on the
+  user's OS/browser voices; it reads Devanagari/Gurmukhi/Latin phonetically
+  through whatever voice matches the `lang` code (`hi-IN`/`pa-IN`/`la`), not
+  a native reciter. Treat as a free stopgap, not real audio.
+- **Occasions** (`Chant.occasions` in `religions.ts`, aggregated in
+  `src/data/chantIndex.ts`) — tags like "exams", "protection", "new home".
+  Only tagged on chants where the association is well-established (e.g.
+  Saraswati → exams, Hanuman → protection) — don't tag every chant with
+  every plausible occasion, it dilutes the filter.
+- **Festivals** (`src/data/festivals.ts`) — hand-maintained dates.
+  Lunar-calendar festivals (Diwali, Navratri, Holi, Janmashtami, Maha
+  Shivratri) are approximate placeholders, not computed — re-verify against
+  a panchang before relying on them, and update yearly.
+- **Offline** (`public/sw.js`, registered in `main.tsx`, prod builds only) —
+  runtime-caches same-origin GETs as the user visits them; it is not a full
+  precache, so a page's first visit still needs network. Registered only
+  when `import.meta.env.PROD` so it doesn't fight Vite's dev HMR.
+- **Regional scripts** — deliberately not implemented. Rendering the same
+  mantra in Tamil/Bengali/Gujarati script needs a real transliteration
+  mapping (e.g. a Sanscript-style library), not hand-typed text — doing it
+  from memory risks silently wrong scripts for religious content.
+
 ## Gotchas (real, hit already)
 
 - **Vercel project name must be lowercase** — the folder is `HolyPlace`

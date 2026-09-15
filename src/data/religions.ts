@@ -13,6 +13,7 @@ export interface Chant {
   title: string;
   nativeTitle: string;
   verses: Verse[];
+  occasions?: string[];
 }
 
 export interface Figure {
@@ -52,6 +53,7 @@ export const religions: Religion[] = [
             typeLabel: "Mantra",
             title: "Ganesha Mantra",
             nativeTitle: "गणेश मंत्र",
+            occasions: ["new beginnings", "new home", "removing obstacles"],
             verses: [
               {
                 hi: "ॐ गं गणपतये नमः",
@@ -121,6 +123,7 @@ export const religions: Religion[] = [
             typeLabel: "Mantra",
             title: "Shiva Mantra",
             nativeTitle: "शिव मंत्र",
+            occasions: ["peace", "inner strength", "meditation"],
             verses: [
               {
                 hi: "ॐ नमः शिवाय",
@@ -135,6 +138,7 @@ export const religions: Religion[] = [
             typeLabel: "Mantra",
             title: "Mahamrityunjaya Mantra",
             nativeTitle: "महामृत्युंजय मंत्र",
+            occasions: ["health", "healing", "protection"],
             verses: [
               {
                 hi: "ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्।\nउर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय मामृतात्॥",
@@ -194,6 +198,7 @@ export const religions: Religion[] = [
             typeLabel: "Mantra",
             title: "Vishnu Mantra",
             nativeTitle: "विष्णु मंत्र",
+            occasions: ["protection", "peace", "new beginnings"],
             verses: [
               {
                 hi: "ॐ नमो नारायणाय",
@@ -263,6 +268,7 @@ export const religions: Religion[] = [
             typeLabel: "Mantra",
             title: "Lakshmi Mantra",
             nativeTitle: "लक्ष्मी मंत्र",
+            occasions: ["wealth", "new home", "prosperity"],
             verses: [
               {
                 hi: "ॐ श्रीं महालक्ष्म्यै नमः",
@@ -346,6 +352,7 @@ export const religions: Religion[] = [
             typeLabel: "Mantra",
             title: "Durga Mantra",
             nativeTitle: "दुर्गा मंत्र",
+            occasions: ["protection", "strength", "courage"],
             verses: [
               {
                 hi: "ॐ दुं दुर्गायै नमः",
@@ -429,6 +436,7 @@ export const religions: Religion[] = [
             typeLabel: "Mantra",
             title: "Saraswati Mantra",
             nativeTitle: "सरस्वती मंत्र",
+            occasions: ["exams", "learning", "creativity"],
             verses: [
               {
                 hi: "ॐ ऐं सरस्वत्यै नमः",
@@ -443,6 +451,7 @@ export const religions: Religion[] = [
             typeLabel: "Vandana",
             title: "Ya Kundendu Tushara Haradhavala",
             nativeTitle: "या कुन्देन्दु तुषारहारधवला",
+            occasions: ["exams", "learning"],
             verses: [
               {
                 hi: "या कुन्देन्दु तुषारहारधवला या शुभ्रवस्त्रावृता।\nया वीणावरदण्डमण्डितकरा या श्वेतपद्मासना॥",
@@ -494,6 +503,7 @@ export const religions: Religion[] = [
             typeLabel: "Mantra",
             title: "Hanuman Mantra",
             nativeTitle: "हनुमान मंत्र",
+            occasions: ["protection", "strength", "courage", "removing fear"],
             verses: [
               {
                 hi: "ॐ हं हनुमते नमः",
@@ -545,6 +555,7 @@ export const religions: Religion[] = [
             typeLabel: "Chalisa",
             title: "Hanuman Chalisa",
             nativeTitle: "हनुमान चालीसा",
+            occasions: ["protection", "strength", "courage", "removing obstacles"],
             verses: [
               {
                 hi: "दोहा॥\nश्री गुरु चरन सरोज रज, निज मनु मुकुरु सुधारि।\nबरनउं रघुबर बिमल जसु, जो दायकु फल चारि॥\nबुद्धिहीन तनु जानिके, सुमिरौं पवन-कुमार।\nबल बुधि विद्या देहु मोहिं, हरहु कलेस बिकार॥",
@@ -650,6 +661,7 @@ export const religions: Religion[] = [
             typeLabel: "Mantra",
             title: "Krishna Mantra",
             nativeTitle: "कृष्ण मंत्र",
+            occasions: ["guidance", "devotion"],
             verses: [
               {
                 hi: "ॐ नमो भगवते वासुदेवाय",
@@ -664,6 +676,7 @@ export const religions: Religion[] = [
             typeLabel: "Gita Shloka",
             title: "Bhagavad Gita 2.47",
             nativeTitle: "भगवद्गीता २.४७",
+            occasions: ["guidance", "career", "letting go of anxiety"],
             verses: [
               {
                 hi: "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।\nमा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥",
@@ -715,6 +728,7 @@ export const religions: Religion[] = [
             typeLabel: "Mantra",
             title: "Kali Mantra",
             nativeTitle: "काली मंत्र",
+            occasions: ["courage", "transformation", "removing fear"],
             verses: [
               {
                 hi: "ॐ क्रीं कालिकायै नमः",
@@ -751,6 +765,7 @@ export const religions: Religion[] = [
             typeLabel: "Mantra",
             title: "Parvati Mantra",
             nativeTitle: "पार्वती मंत्र",
+            occasions: ["marriage", "family", "devotion"],
             verses: [
               {
                 hi: "ॐ पार्वत्यै नमः",
@@ -796,6 +811,7 @@ export const religions: Religion[] = [
             typeLabel: "Mool Mantar",
             title: "Mool Mantar",
             nativeTitle: "ਮੂਲ ਮੰਤਰ",
+            occasions: ["meditation", "guidance", "peace"],
             verses: [
               {
                 hi: "ੴ ਸਤਿ ਨਾਮੁ ਕਰਤਾ ਪੁਰਖੁ ਨਿਰਭਉ ਨਿਰਵੈਰੁ ਅਕਾਲ ਮੂਰਤਿ ਅਜੂਨੀ ਸੈਭੰ ਗੁਰ ਪ੍ਰਸਾਦਿ॥",
@@ -828,6 +844,7 @@ export const religions: Religion[] = [
             typeLabel: "Ardas",
             title: "Ardas — Closing Prayer",
             nativeTitle: "ਅਰਦਾਸ",
+            occasions: ["wellbeing for all", "protection", "gratitude"],
             verses: [
               {
                 hi: "ਨਾਨਕ ਨਾਮ ਚੜ੍ਹਦੀ ਕਲਾ॥ ਤੇਰੇ ਭਾਣੇ ਸਰਬੱਤ ਦਾ ਭਲਾ॥",
@@ -859,6 +876,7 @@ export const religions: Religion[] = [
             typeLabel: "Prayer",
             title: "The Lord's Prayer",
             nativeTitle: "Pater Noster",
+            occasions: ["guidance", "forgiveness", "daily practice"],
             verses: [
               {
                 hi: "Pater noster, qui es in caelis, sanctificetur nomen tuum.\nAdveniat regnum tuum. Fiat voluntas tua, sicut in caelo et in terra.\nPanem nostrum quotidianum da nobis hodie,\net dimitte nobis debita nostra sicut et nos dimittimus debitoribus nostris.\nEt ne nos inducas in tentationem, sed libera nos a malo. Amen.",
@@ -872,6 +890,7 @@ export const religions: Religion[] = [
             typeLabel: "Psalm",
             title: "Psalm 23 — The Lord Is My Shepherd",
             nativeTitle: "Dominus Regit Me",
+            occasions: ["comfort", "protection", "grief"],
             verses: [
               {
                 hi: "Dominus regit me, et nihil mihi deerit.\nIn loco pascuae, ibi me collocavit; super aquam refectionis educavit me.\nAnimam meam convertit; deduxit me super semitas iustitiae propter nomen suum.\nNam et si ambulavero in medio umbrae mortis, non timebo mala, quoniam tu mecum es;\nvirga tua et baculus tuus, ipsa me consolata sunt.",
@@ -893,6 +912,7 @@ export const religions: Religion[] = [
             typeLabel: "Prayer",
             title: "Hail Mary",
             nativeTitle: "Ave Maria",
+            occasions: ["intercession", "protection", "family"],
             verses: [
               {
                 hi: "Ave Maria, gratia plena, Dominus tecum.\nBenedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus.\nSancta Maria, Mater Dei, ora pro nobis peccatoribus,\nnunc et in hora mortis nostrae. Amen.",

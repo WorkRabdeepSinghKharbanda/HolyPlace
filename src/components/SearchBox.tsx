@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { religions } from "../data/religions";
+import { chantIndex } from "../data/chantIndex";
 
 interface SearchEntry {
   path: string;
@@ -10,24 +11,25 @@ interface SearchEntry {
   haystack: string;
 }
 
-const index: SearchEntry[] = religions.flatMap((r) =>
-  r.figures.flatMap((f) => [
-    {
-      path: `/${r.id}/${f.id}`,
-      label: f.name,
-      sublabel: `${r.name} · ${f.nativeName}`,
-      religionColor: r.color,
-      haystack: `${f.name} ${f.nativeName} ${f.epithet} ${r.name}`.toLowerCase(),
-    },
-    ...f.chants.map((c) => ({
-      path: `/${r.id}/${f.id}/${c.id}`,
-      label: `${f.name} — ${c.title}`,
-      sublabel: `${r.name} · ${c.typeLabel} · ${c.nativeTitle}`,
-      religionColor: r.color,
-      haystack: `${f.name} ${f.nativeName} ${c.title} ${c.nativeTitle} ${c.typeLabel} ${r.name} ${r.script}`.toLowerCase(),
-    })),
-  ])
+const figureEntries: SearchEntry[] = religions.flatMap((r) =>
+  r.figures.map((f) => ({
+    path: `/${r.id}/${f.id}`,
+    label: f.name,
+    sublabel: `${r.name} · ${f.nativeName}`,
+    religionColor: r.color,
+    haystack: `${f.name} ${f.nativeName} ${f.epithet} ${r.name}`.toLowerCase(),
+  }))
 );
+
+const chantEntries: SearchEntry[] = chantIndex.map((e) => ({
+  path: e.path,
+  label: `${e.figureName} — ${e.chant.title}`,
+  sublabel: `${e.religionName} · ${e.chant.typeLabel} · ${e.chant.nativeTitle}`,
+  religionColor: e.religionColor,
+  haystack: `${e.figureName} ${e.figureNativeName} ${e.chant.title} ${e.chant.nativeTitle} ${e.chant.typeLabel} ${e.religionName} ${e.religionScript} ${(e.chant.occasions ?? []).join(" ")}`.toLowerCase(),
+}));
+
+const index: SearchEntry[] = [...figureEntries, ...chantEntries];
 
 export default function SearchBox() {
   const [query, setQuery] = useState("");
