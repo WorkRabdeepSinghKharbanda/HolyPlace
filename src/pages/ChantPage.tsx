@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { getChant, getFigure, getReligion } from "../data/religions";
+import { getChant, getFigure, getReligion, type Verse } from "../data/religions";
 import Seo from "../components/Seo";
 import ReciteMode from "../components/ReciteMode";
+import ScriptToggle from "../components/ScriptToggle";
 import { useFavorites } from "../hooks/useFavorites";
 import { useSpeech } from "../hooks/useSpeech";
 import { usePracticeStreak } from "../hooks/usePracticeStreak";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { supportsScriptToggle, transliterateFromNative } from "../lib/transliterate";
 
 const SPEECH_LANG: Record<string, string> = {
   Devanagari: "hi-IN",
@@ -20,6 +23,7 @@ export default function ChantPage() {
   const chant = religionId && figureId && chantId ? getChant(religionId, figureId, chantId) : undefined;
   const [showTranslation, setShowTranslation] = useState(true);
   const [reciting, setReciting] = useState(false);
+  const [script, setScript] = useLocalStorage("holyplace-script", "native");
 
   const { isFavorite, toggleFavorite } = useFavorites();
   const { streak, doneToday, markDoneToday } = usePracticeStreak();
@@ -30,6 +34,16 @@ export default function ChantPage() {
   );
 
   if (!religion || !figure || !chant) return <Navigate to="/" replace />;
+
+  const canToggleScript = supportsScriptToggle(religion.script);
+  const displayVerses: Verse[] =
+    canToggleScript && script !== "native"
+      ? chant.verses.map((v) => ({ ...v, hi: transliterateFromNative(v.hi, religion.script, script) }))
+      : chant.verses;
+  const displayNativeTitle =
+    canToggleScript && script !== "native"
+      ? transliterateFromNative(chant.nativeTitle, religion.script, script)
+      : chant.nativeTitle;
 
   return (
     <div>
@@ -53,7 +67,7 @@ export default function ChantPage() {
           {chant.typeLabel}
         </p>
         <h1>{chant.title}</h1>
-        <p className="epithet">{chant.nativeTitle}</p>
+        <p className="epithet">{displayNativeTitle}</p>
         {chant.occasions && chant.occasions.length > 0 && (
           <p className="occasion-tags no-print">
             {chant.occasions.map((o) => (
@@ -75,6 +89,7 @@ export default function ChantPage() {
         <button className="toolbar-btn" onClick={() => toggleFavorite(path)}>
           {isFavorite(path) ? "★ Favorited" : "☆ Favorite"}
         </button>
+        {canToggleScript && <ScriptToggle value={script} onChange={setScript} />}
         {speechSupported && (
           <button className="toolbar-btn" onClick={speaking ? stop : play}>
             {speaking ? "⏹ Stop" : "🔊 Listen"}
@@ -92,7 +107,7 @@ export default function ChantPage() {
       </div>
 
       <section className="card">
-        {chant.verses.map((verse, i) => (
+        {displayVerses.map((verse, i) => (
           <div className="verse" key={i}>
             <p className="hi">{verse.hi}</p>
             {verse.translit && <p className="mantra-translit">{verse.translit}</p>}
@@ -102,7 +117,7 @@ export default function ChantPage() {
       </section>
 
       {reciting && (
-        <ReciteMode verses={chant.verses} showTranslation={showTranslation} onClose={() => setReciting(false)} />
+        <ReciteMode verses={displayVerses} showTranslation={showTranslation} onClose={() => setReciting(false)} />
       )}
     </div>
   );

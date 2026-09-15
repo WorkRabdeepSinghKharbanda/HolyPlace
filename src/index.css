@@ -375,6 +375,10 @@ main {
   cursor: default;
 }
 
+.script-select {
+  font-family: inherit;
+}
+
 .occasion-tags {
   display: flex;
   flex-wrap: wrap;

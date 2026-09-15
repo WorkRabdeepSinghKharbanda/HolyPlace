@@ -92,10 +92,18 @@ don't (multi-line native text is self-contained).
   runtime-caches same-origin GETs as the user visits them; it is not a full
   precache, so a page's first visit still needs network. Registered only
   when `import.meta.env.PROD` so it doesn't fight Vite's dev HMR.
-- **Regional scripts** — deliberately not implemented. Rendering the same
-  mantra in Tamil/Bengali/Gujarati script needs a real transliteration
-  mapping (e.g. a Sanscript-style library), not hand-typed text — doing it
-  from memory risks silently wrong scripts for religious content.
+- **Regional scripts** (`src/lib/transliterate.ts`) — real transliteration
+  via `@indic-transliteration/sanscript` (MIT, client-side only, no API
+  calls, free), not hand-typed text. Only offered when the religion's
+  native script is Brahmic (Devanagari, Gurmukhi — see
+  `supportsScriptToggle`); Latin-script traditions (Christianity) have
+  nothing to transliterate into an Indic script, so the toggle doesn't
+  appear there. Preference persists in
+  `localStorage["holyplace-script"]`. The package's own `toml` dependency
+  has a known high-severity advisory, but `toml` is only used by
+  Sanscript's build scripts, never by the `sanscript.js` runtime file we
+  import — confirmed by grepping the bundled file — so it's unreachable
+  from our code.
 
 ## Gotchas (real, hit already)
 
