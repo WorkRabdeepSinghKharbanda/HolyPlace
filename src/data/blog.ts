@@ -9,6 +9,13 @@ export interface RelatedLink {
   chantId?: string;
 }
 
+export interface BlogImage {
+  src: string; // path under public/, e.g. "/blog-images/hanuman.jpg"
+  alt: string;
+  credit: string; // e.g. "Author Name, Wikimedia Commons, CC BY-SA 4.0"
+  creditUrl: string; // link to the source file/license page
+}
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -17,6 +24,7 @@ export interface BlogPost {
   publishedDate: string;
   updatedDate: string;
   keywords: string[];
+  image?: BlogImage;
   relatedLinks: RelatedLink[];
   relatedPosts?: string[];
   sectionTitles?: Partial<{

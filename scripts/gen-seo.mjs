@@ -3,6 +3,7 @@
 // Runs as a `prebuild` step.
 import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { execSync } from "node:child_process";
 import path from "node:path";
 import { enumerateRoutes, loadData } from "./routes.mjs";
 
@@ -11,7 +12,34 @@ const SITE = "https://holyplace.vercel.app";
 
 const routes = await enumerateRoutes();
 const { religions, posts } = await loadData();
-const today = new Date().toISOString().slice(0, 10);
+
+// Real last-modified dates, not "today" on every build — a sitemap that
+// claims every page changed on every deploy is a signal search engines
+// learn to discount. Chant/figure/religion pages derive their lastmod from
+// religions.ts's actual last git commit date; blog posts use their own
+// tracked updatedDate (already hand-maintained per post); everything else
+// falls back to whichever of the two content files changed more recently.
+function lastCommitDate(file) {
+  try {
+    const out = execSync(`git log -1 --format=%cd --date=short -- ${file}`, { cwd: root }).toString().trim();
+    return out || new Date().toISOString().slice(0, 10);
+  } catch {
+    return new Date().toISOString().slice(0, 10);
+  }
+}
+
+const religionsLastmod = lastCommitDate("src/data/religions.ts");
+const blogLastmod = lastCommitDate("src/data/blog.ts");
+const siteLastmod = religionsLastmod > blogLastmod ? religionsLastmod : blogLastmod;
+
+const postLastmod = new Map(posts.map((p) => [p.slug, p.updatedDate]));
+
+function lastmodFor(route) {
+  if (route.type === "chant" || route.type === "figure" || route.type === "religion") return religionsLastmod;
+  if (route.type === "blog-post") return postLastmod.get(route.slug) ?? blogLastmod;
+  if (route.type === "blog-index") return blogLastmod;
+  return siteLastmod;
+}
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -19,7 +47,7 @@ ${routes
   .map(
     (r) => `  <url>
     <loc>${SITE}${r.routePath}</loc>
-    <lastmod>${today}</lastmod>
+    <lastmod>${lastmodFor(r)}</lastmod>
     <changefreq>${r.changefreq}</changefreq>
     <priority>${r.priority}</priority>
   </url>`

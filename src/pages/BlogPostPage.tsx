@@ -65,6 +65,7 @@ export default function BlogPostPage() {
     },
     mainEntityOfPage: `${SITE}/blog/${post.slug}`,
     keywords: post.keywords.join(", "),
+    ...(post.image ? { image: `${SITE}${post.image.src}` } : {}),
   };
 
   return (
@@ -89,6 +90,17 @@ export default function BlogPostPage() {
         <h1>{post.title}</h1>
         <p className="epithet">{post.description}</p>
       </div>
+
+      {post.image && (
+        <figure className="blog-image">
+          <img src={post.image.src} alt={post.image.alt} loading="lazy" />
+          <figcaption>
+            <a href={post.image.creditUrl} target="_blank" rel="noopener noreferrer">
+              {post.image.credit}
+            </a>
+          </figcaption>
+        </figure>
+      )}
 
       <article className="card blog-post">
         <section>
