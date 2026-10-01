@@ -1,8 +1,10 @@
 # HolyPlace
 
-> Devotional chants across traditions — aarti, mantra, chalisa, and prayer, in the original script with English translation. Client-rendered React app — routes below only render after JavaScript executes; non-JS crawlers see only this file and the static index.html head.
+> Devotional chants across traditions — aarti, mantra, chalisa, and prayer, in the original script with English translation, plus guides on meaning, benefits, and festivals. Routes are statically prerendered, so non-JS crawlers see real content, not just this file.
 
 - [Home](https://holyplace.vercel.app/): Grid linking to every tradition.
+- [Guides](https://holyplace.vercel.app/blog): Meaning, benefits, and how-to guides across every tradition.
+- [About](https://holyplace.vercel.app/about): What this site is and isn't.
 
 ## Hinduism
 
@@ -72,3 +74,19 @@
   - [Tisarana — The Three Refuges](https://holyplace.vercel.app/buddhism/buddha/trisarana): Refuge Formula for Buddha, "त्रिशरण", Devanagari with English translation.
   - [Om Mani Padme Hum](https://holyplace.vercel.app/buddhism/buddha/om-mani-padme-hum): Mantra for Buddha, "ॐ मणि पद्मे हूँ", Devanagari with English translation.
   - [Heart Sutra — Closing Mantra](https://holyplace.vercel.app/buddhism/buddha/heart-sutra-mantra): Sutra Mantra for Buddha, "गते गते पारगते", Devanagari with English translation.
+
+## Guides
+
+- [Benefits of Chanting the Hanuman Chalisa](https://holyplace.vercel.app/blog/hanuman-chalisa-benefits): What the Hanuman Chalisa is, how it's traditionally recited, and the benefits devotees associate with chanting it daily.
+- [Benefits of Chanting the Ganesha Mantra](https://holyplace.vercel.app/blog/ganesha-mantra-benefits): The meaning of "Om Gam Ganapataye Namah," how and when it's traditionally chanted, and why it's associated with new beginnings.
+- [Om Namah Shivaya: Meaning and Benefits](https://holyplace.vercel.app/blog/om-namah-shivaya-meaning): The meaning behind one of Hinduism's most chanted mantras, how it's used in practice, and its place in Shaiva tradition.
+- [Mantras to Chant Before an Exam](https://holyplace.vercel.app/blog/mantras-for-exams): Which mantras are traditionally chanted for focus, confidence, and calm before exams — and how to use them.
+- [How to Celebrate Diwali: A Lakshmi Puja Guide](https://holyplace.vercel.app/blog/diwali-lakshmi-puja-guide): What Diwali is, why Lakshmi puja is central to the festival, and how it's traditionally observed.
+- [Navratri: The Nine Nights and Nine Forms of Durga](https://holyplace.vercel.app/blog/navratri-durga-guide): What Navratri celebrates, the nine forms of Durga associated with each night, and how the festival is observed.
+- [The Mool Mantar: Meaning of Sikhism's Opening Prayer](https://holyplace.vercel.app/blog/mool-mantar-meaning): The meaning and significance of the Mool Mantar, the opening verse of the Guru Granth Sahib and the foundation of Sikh belief.
+- [What Is Ardas? The Sikh Prayer of Petition](https://holyplace.vercel.app/blog/ardas-meaning): What Ardas is, when it's recited, and the meaning of its closing lines on collective well-being.
+- [The Lord's Prayer: Meaning and History](https://holyplace.vercel.app/blog/lords-prayer-meaning): The origin of the Lord's Prayer, its structure, and the meaning of its central petitions.
+- [The Hail Mary: Meaning and Origins](https://holyplace.vercel.app/blog/hail-mary-meaning): The origin of the Hail Mary prayer, its two-part structure, and its place in Catholic devotional practice.
+- [Om Mani Padme Hum: Meaning of the Buddhist Mantra](https://holyplace.vercel.app/blog/om-mani-padme-hum-meaning): The meaning and significance of Om Mani Padme Hum, one of the most widely recognized mantras in Buddhism.
+- [The Three Refuges: What Is Ti-Sarana in Buddhism?](https://holyplace.vercel.app/blog/three-refuges-meaning): The meaning of the Three Refuges (Buddha, Dhamma, Sangha) and why taking refuge is foundational to Buddhist practice.
+- [A Beginner's Glossary: Common Words in Devotional Chanting](https://holyplace.vercel.app/blog/glossary-devotional-terms): Plain-language definitions for mantra, aarti, chalisa, puja, and other terms used across every guide on this site.

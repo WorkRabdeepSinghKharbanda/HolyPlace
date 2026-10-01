@@ -3,6 +3,30 @@
 Implementation details behind the user-facing features, beyond what the
 brain files (route-level) and CLAUDE.md (architecture-level) cover.
 
+## Guides / blog (`src/data/blog.ts`, `/blog`, `/blog/:slug`)
+
+- SEO-driven: topics chosen from real Google Autocomplete data (see
+  `.claude/brain/seo/`), not guessed. "Benefits of chanting X" and "X
+  meaning/history" were the two patterns with the strongest, most
+  consistent hits across figures/traditions.
+- A glossary post (`glossary-devotional-terms`) defines every piece of
+  jargon used across the other posts (mantra, aarti, chalisa, puja,
+  bodhisattva, Dhamma, intercession, etc.) — every other post's opening
+  paragraph was rewritten to include one plain-language orienting sentence
+  before the specifics, and links back to the glossary via `relatedPosts`.
+  Do the same for any new post: assume zero prior background, define the
+  tradition-specific term inline before using it.
+- No invented statistics, quotes, or benchmarks — benefits are framed as
+  "traditionally believed" / "in Hindu tradition," not medical or
+  scientific claims. If a fact can't be stated with confidence, it's left
+  out rather than guessed (same standard as the chant content itself).
+- `scripts/keyword-research.mjs` — a one-off script (not wired into the
+  build) that queries Google Autocomplete for every figure/chant/festival
+  and writes `.claude/brain/seo/keywords.json` (raw) and `keyword-index.md`
+  (readable, grouped by owning page). Re-run by hand when planning new
+  content; results drift over time so don't treat old output as current
+  demand.
+
 ## Core interaction
 
 - **Favorites** (`src/hooks/useFavorites.ts`) — array of chant paths in

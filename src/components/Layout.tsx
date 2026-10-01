@@ -23,6 +23,9 @@ export default function Layout() {
               {r.name}
             </NavLink>
           ))}
+          <NavLink to="/blog" className={({ isActive }) => (isActive ? "active" : "")}>
+            Guides
+          </NavLink>
         </nav>
         <div className="header-controls">
           <SearchBox />
@@ -38,6 +41,16 @@ export default function Layout() {
       </main>
       <footer className="site-footer">
         <p>{t("footer_text")}</p>
+        <p className="footer-links">
+          <NavLink to="/blog">Guides</NavLink>
+          {religions.map((r) => (
+            <NavLink key={r.id} to={`/${r.id}`}>
+              {r.name}
+            </NavLink>
+          ))}
+          <NavLink to="/about">About</NavLink>
+          <NavLink to="/privacy">Privacy</NavLink>
+        </p>
       </footer>
     </div>
   );

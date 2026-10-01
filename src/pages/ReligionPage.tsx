@@ -1,5 +1,6 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { getReligion } from "../data/religions";
+import { postsByCategory } from "../data/blog";
 import Seo from "../components/Seo";
 import Breadcrumb from "../components/Breadcrumb";
 import { useLang } from "../context/LangContext";
@@ -10,6 +11,8 @@ export default function ReligionPage() {
   const { t } = useLang();
 
   if (!religion) return <Navigate to="/" replace />;
+
+  const guides = postsByCategory(religion.id);
 
   const breadcrumb = [
     { name: "Home", path: "/" },
@@ -45,6 +48,20 @@ export default function ReligionPage() {
           </Link>
         ))}
       </div>
+
+      {guides.length > 0 && (
+        <section className="home-section">
+          <h2>Guides about {religion.name}</h2>
+          <div className="deity-grid">
+            {guides.map((p) => (
+              <Link key={p.slug} to={`/blog/${p.slug}`} className="deity-card">
+                <span className="name">{p.title}</span>
+                <span className="epithet">{p.description}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

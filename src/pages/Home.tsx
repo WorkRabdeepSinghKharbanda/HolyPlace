@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { religions } from "../data/religions";
-import { allOccasions, chantByPath, chantsByOccasion, dailyChant } from "../data/chantIndex";
-import { upcomingFestivals } from "../data/festivals";
+import { allOccasions, chantByPath, chantIndex, chantsByOccasion, dailyChant, type ChantIndexEntry } from "../data/chantIndex";
+import { upcomingFestivals, type Festival } from "../data/festivals";
 import { useFavorites } from "../hooks/useFavorites";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import Seo from "../components/Seo";
@@ -12,11 +13,24 @@ export default function Home() {
   const [searchParams] = useSearchParams();
   const occasion = searchParams.get("occasion");
   const { favorites } = useFavorites();
-  const daily = dailyChant();
-  const festivals = upcomingFestivals();
   const { t } = useLang();
   const [lastVisited] = useLocalStorage<string | null>("holyplace-last-visited", null);
   const lastEntry = lastVisited ? chantByPath(lastVisited) : undefined;
+
+  // Both depend on "now", which differs between prerender time and the
+  // visitor's actual load time — computing them directly during render would
+  // make the client's first paint diverge from the prerendered HTML whenever
+  // a visitor loads the page on a later day than the last deploy, a
+  // hydration mismatch (React error #418). Start from a fixed, deterministic
+  // value (matching what the server rendered) and resolve the real "today"
+  // value in an effect after mount instead.
+  const [daily, setDaily] = useState<ChantIndexEntry>(chantIndex[0]);
+  const [festivals, setFestivals] = useState<Festival[]>([]);
+
+  useEffect(() => {
+    setDaily(dailyChant());
+    setFestivals(upcomingFestivals());
+  }, []);
 
   return (
     <div>
@@ -111,7 +125,7 @@ export default function Home() {
                 <li key={f.name}>
                   <Link to={f.path}>{f.name}</Link>
                   <span className="festival-date">
-                    {new Date(f.date).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
+                    {new Date(f.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                   </span>
                 </li>
               ))}

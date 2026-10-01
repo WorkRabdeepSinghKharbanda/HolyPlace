@@ -12,6 +12,8 @@ import { usePracticeStreak } from "../hooks/usePracticeStreak";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useSwipe } from "../hooks/useSwipe";
 import { supportsScriptToggle, transliterateFromNative } from "../lib/transliterate";
+import { generateChantFaq } from "../lib/chantFaq";
+import { postsForChant } from "../data/blog";
 import { useLang } from "../context/LangContext";
 
 const SITE = "https://holyplace.vercel.app";
@@ -98,6 +100,18 @@ export default function ChantPage() {
     { name: chant.title, path },
   ];
 
+  const faqs = generateChantFaq(chant, religion);
+  const guides = postsForChant(religion.id, figure.id, chant.id);
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
   const copyChant = async () => {
     const text = displayVerses
       .map((v) => `${v.hi}${v.translit ? `\n${v.translit}` : ""}${showTranslation ? `\n${v.en}` : ""}`)
@@ -110,10 +124,11 @@ export default function ChantPage() {
   return (
     <div {...swipeHandlers}>
       <Seo
-        title={`${chant.title} — ${figure.name} — HolyPlace`}
-        description={`${chant.typeLabel} for ${figure.name}: ${chant.nativeTitle}, in ${religion.script} with English translation.`}
+        title={`${chant.title} Lyrics in English with Meaning — ${figure.name} ${chant.typeLabel} — HolyPlace`}
+        description={`${chant.nativeTitle} (${chant.title}): ${chant.typeLabel.toLowerCase()} for ${figure.name} with full lyrics, transliteration, and English translation.`}
         path={path}
         breadcrumb={breadcrumb}
+        extraJsonLd={[{ id: "ld-faq", data: faqJsonLd }]}
       />
       <Breadcrumb items={breadcrumb} />
       <Link to={`/${religion.id}/${figure.id}`} className="back-link no-print">
@@ -194,6 +209,30 @@ export default function ChantPage() {
 
       {reciting && (
         <ReciteMode verses={displayVerses} showTranslation={showTranslation} onClose={() => setReciting(false)} />
+      )}
+
+      <section className="card blog-post no-print">
+        <h2>FAQ</h2>
+        {faqs.map((f, i) => (
+          <div key={i} className="faq-item">
+            <p className="faq-q">{f.q}</p>
+            <p className="faq-a">{f.a}</p>
+          </div>
+        ))}
+      </section>
+
+      {guides.length > 0 && (
+        <section className="home-section no-print">
+          <h2>Related guides</h2>
+          <div className="deity-grid">
+            {guides.map((p) => (
+              <Link key={p.slug} to={`/blog/${p.slug}`} className="deity-card">
+                <span className="name">{p.title}</span>
+                <span className="epithet">{p.description}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
       )}
     </div>
   );

@@ -14,9 +14,12 @@ light/dark UI.
 
 ## Stack
 
-React 19 + TypeScript, Vite build, React Router (client-side, no SSR/SSG).
-No backend — all content lives in `src/data/religions.ts`. Deployed to
-Vercel via CLI (`npx vercel --prod --yes`), not git-integrated. Git remote:
+React 19 + TypeScript, Vite build, React Router. No backend — content lives
+in `src/data/religions.ts` and `src/data/blog.ts`. **Every route is
+statically prerendered at build time** (react-dom/server + a StaticRouter
+pass per route — see "Prerendering" below); the app still hydrates and
+behaves as an SPA after that. Deployed to Vercel via CLI
+(`npx vercel --prod --yes`), not git-integrated. Git remote:
 github.com/WorkRabdeepSinghKharbanda/HolyPlace, direct-to-master (see
 `.claude/rules/branching.md`).
 
@@ -39,9 +42,41 @@ don't (multi-line native text is self-contained).
 two other content-adjacent data files — see `.claude/docs/features.md` for
 how they're used.
 
+## Prerendering
+
+Build pipeline (`npm run build`): `tsc -b && vite build` (client bundle) →
+`vite build --ssr src/entry-server.tsx --outDir dist-server` (SSR bundle) →
+`node scripts/prerender.mjs` (walks every route from `scripts/routes.mjs`,
+calls `render()` from the SSR bundle, injects meta from `getPageMeta()` —
+also re-exported from the SSR bundle, see gotchas — into a copy of
+`dist/index.html`, writes one `dist/<route>/index.html` per route).
+
+- `src/entry-server.tsx` — the SSR render entry (`renderToString` +
+  `StaticRouter`), also re-exports `getPageMeta` so the prerender script
+  only needs one Vite-built bundle to import from.
+- `src/lib/pageMeta.ts` — pure, server-safe per-route title/description/
+  canonical/JSON-LD. This is what prerendering actually uses — the client
+  `<Seo/>` component's `useEffect` never runs during `renderToString`, so
+  it plays no part in the static output. Keep both in sync; see gotchas.
+- `main.tsx` uses `hydrateRoot` when `#root` already has prerendered
+  children, `createRoot` otherwise (so plain `vite dev` still works).
+- Vercel serves a static file that exists on disk before falling back to
+  `vercel.json`'s SPA rewrite, so the prerendered `dist/<route>/index.html`
+  files are what crawlers/social unfurlers/curl actually see — not a
+  generic shell.
+
 ## Folder structure
 
-- `src/data/religions.ts` — single source of truth for all content.
+- `src/data/religions.ts` — single source of truth for all chant content.
+- `src/data/blog.ts` — guide/blog posts (meaning, benefits, festival guides,
+  a beginner glossary). Each post has structured sections (what it is / how
+  to use / benefits / limitations / use cases / tips / FAQ), `relatedLinks`
+  into `religions.ts`, and `relatedPosts` (other post slugs) for
+  cross-linking. `sectionTitles` can override a section's heading per-post
+  (used by the glossary, whose "how to" section is really a term list).
+- `scripts/routes.mjs` — single source of truth for "every route this site
+  has," consumed by both `gen-seo.mjs` and `prerender.mjs` so they can't
+  enumerate a different route set from each other.
 - `src/data/chantIndex.ts` — flat derived index over `religions.ts` (one
   entry per chant), reused by search, daily-chant, occasion filter, and
   favorites/last-visited lookups. Add new cross-cutting chant lookups here

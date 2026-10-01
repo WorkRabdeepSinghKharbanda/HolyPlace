@@ -5,6 +5,8 @@ interface SeoProps {
   description: string;
   path: string;
   breadcrumb: { name: string; path: string }[];
+  extraJsonLd?: { id: string; data: object }[];
+  ogType?: string;
 }
 
 const SITE = "https://holyplace.vercel.app";
@@ -41,11 +43,15 @@ function setJsonLd(id: string, data: object) {
 }
 
 /**
- * Injects per-route meta tags client-side. This is a CSR SPA with no SSR/prerendering,
- * so a crawler that doesn't execute JS (most AI crawlers) never sees this — it only
- * sees index.html's static head. llms.txt is the mitigation for those, not a fix.
+ * Updates per-route meta tags client-side on navigation (after hydration).
+ * The FIRST paint of every route's head/JSON-LD comes from the prerender
+ * step instead (scripts/prerender.mjs + src/lib/pageMeta.ts) — this effect
+ * mainly keeps meta correct during client-side SPA navigation afterward,
+ * and is a no-op on first load since it sets the same values the prerender
+ * already wrote. Keep src/lib/pageMeta.ts in sync with each page's <Seo/>
+ * props if either changes — see CLAUDE.md gotchas.
  */
-export default function Seo({ title, description, path, breadcrumb }: SeoProps) {
+export default function Seo({ title, description, path, breadcrumb, extraJsonLd, ogType = "website" }: SeoProps) {
   useEffect(() => {
     const url = `${SITE}${path}`;
     document.title = title;
@@ -56,7 +62,7 @@ export default function Seo({ title, description, path, breadcrumb }: SeoProps) 
     setMeta("property", "og:title", title);
     setMeta("property", "og:description", description);
     setMeta("property", "og:url", url);
-    setMeta("property", "og:type", "website");
+    setMeta("property", "og:type", ogType);
     setMeta("property", "og:image", `${SITE}/og-image.png`);
 
     setMeta("name", "twitter:card", "summary_large_image");
@@ -74,7 +80,11 @@ export default function Seo({ title, description, path, breadcrumb }: SeoProps) 
         item: `${SITE}${b.path}`,
       })),
     });
-  }, [title, description, path, breadcrumb]);
+
+    for (const { id, data } of extraJsonLd ?? []) {
+      setJsonLd(id, data);
+    }
+  }, [title, description, path, breadcrumb, extraJsonLd, ogType]);
 
   return null;
 }

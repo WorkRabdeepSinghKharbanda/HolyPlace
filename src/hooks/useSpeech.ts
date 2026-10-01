@@ -9,8 +9,17 @@ import { useEffect, useRef, useState } from "react";
  */
 export function useSpeech(lines: string[], lang: string) {
   const [speaking, setSpeaking] = useState(false);
-  const supported = typeof window !== "undefined" && "speechSynthesis" in window;
+  // Starts false (matching the prerendered server output, which has no
+  // `window`) and flips true in an effect after mount — checking
+  // `"speechSynthesis" in window` synchronously during render would make
+  // the Listen button present/absent differently between server and client
+  // on first paint, a structural hydration mismatch (React error #418).
+  const [supported, setSupported] = useState(false);
   const linesRef = useRef(lines);
+
+  useEffect(() => {
+    setSupported("speechSynthesis" in window);
+  }, []);
 
   useEffect(() => {
     linesRef.current = lines;

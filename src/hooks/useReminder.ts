@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 
 /**
@@ -12,8 +12,15 @@ import { useLocalStorage } from "./useLocalStorage";
 export function useReminder() {
   const [time, setTime] = useLocalStorage<string | null>("holyplace-reminder-time", null);
   const [lastFired, setLastFired] = useLocalStorage<string | null>("holyplace-reminder-last-fired", null);
-  const supported = typeof window !== "undefined" && "Notification" in window;
-  const permission = supported ? Notification.permission : "denied";
+  // Starts false, like useSpeech's `supported` — see that hook's comment.
+  const [supported, setSupported] = useState(false);
+  const [permission, setPermission] = useState<NotificationPermission | "denied">("denied");
+
+  useEffect(() => {
+    const hasNotifications = "Notification" in window;
+    setSupported(hasNotifications);
+    if (hasNotifications) setPermission(Notification.permission);
+  }, []);
 
   const enable = async (hhmm: string) => {
     if (!supported) return;

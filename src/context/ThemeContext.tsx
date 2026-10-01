@@ -12,11 +12,21 @@ const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 const STORAGE_KEY = "holyplace-theme";
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => {
+  // Always starts "light" (matching the prerendered server output) and syncs
+  // from localStorage/system preference in an effect after mount — reading
+  // either synchronously in the initializer would make a returning visitor's
+  // first client render diverge from the prerendered HTML and trigger a
+  // hydration mismatch (React error #418). See useLocalStorage.ts.
+  const [theme, setTheme] = useState<Theme>("light");
+
+  useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === "light" || stored === "dark") return stored;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  });
+    if (stored === "light" || stored === "dark") {
+      setTheme(stored);
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setTheme("dark");
+    }
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
