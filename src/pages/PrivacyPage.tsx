@@ -73,7 +73,7 @@ export default function PrivacyPage() {
           <h2>Contact</h2>
           <p>
             Questions about this policy can be sent to{" "}
-            <a href="mailto:REPLACE_WITH_CONTACT_EMAIL">REPLACE_WITH_CONTACT_EMAIL</a>.
+            <a href="mailto:rabdeepsinghkharbanda29@gmail.com">rabdeepsinghkharbanda29@gmail.com</a>.
           </p>
         </section>
       </article>

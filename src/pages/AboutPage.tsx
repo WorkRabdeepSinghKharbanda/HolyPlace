@@ -42,7 +42,7 @@ export default function AboutPage() {
           <h2>Contact</h2>
           <p>
             For corrections, suggestions, or questions about this site, email{" "}
-            <a href="mailto:REPLACE_WITH_CONTACT_EMAIL">REPLACE_WITH_CONTACT_EMAIL</a>.
+            <a href="mailto:rabdeepsinghkharbanda29@gmail.com">rabdeepsinghkharbanda29@gmail.com</a>.
           </p>
         </section>
       </article>
