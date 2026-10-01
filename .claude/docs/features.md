@@ -20,6 +20,22 @@ brain files (route-level) and CLAUDE.md (architecture-level) cover.
   "traditionally believed" / "in Hindu tradition," not medical or
   scientific claims. If a fact can't be stated with confidence, it's left
   out rather than guessed (same standard as the chant content itself).
+- Every post is ~4,000-5,000 words (expanded from an initial ~1,000-word
+  batch after direct feedback that the first version assumed too much
+  background) and has one `BlogImage` (`src/data/blog.ts`'s `image` field,
+  rendered by `BlogPostPage.tsx` as a `<figure>` with a required credit
+  link). Every image is real public-domain or CC-licensed content from
+  Wikimedia Commons, license verified on the actual Commons file page
+  before downloading — never assumed from a filename. Files live in
+  `public/blog-images/`, resized to a sane max dimension so none is over
+  ~500KB. If you add a new post, hold to the same bar: open the file page,
+  confirm the stated license yourself, keep the credit/creditUrl pointing
+  at that exact page.
+- This much text does inflate the client bundle (~250KB gzip, mostly
+  `blog.ts`'s content) since there's no code-splitting per post — acceptable
+  for a site this size, but if more long-form content gets added, revisit
+  route-based code-splitting rather than shipping every post's full text on
+  every page load.
 - `scripts/keyword-research.mjs` — a one-off script (not wired into the
   build) that queries Google Autocomplete for every figure/chant/festival
   and writes `.claude/brain/seo/keywords.json` (raw) and `keyword-index.md`
