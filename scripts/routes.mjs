@@ -8,9 +8,9 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 
 export async function loadData() {
   const t = Date.now();
-  const { religions } = await import(path.join(root, "src/data/religions.ts") + `?t=${t}`);
+  const { religions, CONTENT_UPDATED } = await import(path.join(root, "src/data/religions.ts") + `?t=${t}`);
   const { posts } = await import(path.join(root, "src/data/blog.ts") + `?t=${t}`);
-  return { religions, posts };
+  return { religions, posts, CONTENT_UPDATED };
 }
 
 export async function enumerateRoutes() {

@@ -1,22 +1,22 @@
 # Gotchas (real, hit already)
 
-- **Sitemap `lastmod` must reflect real content changes, not build time** —
-  `gen-seo.mjs` originally wrote `new Date()` (today) as every single
-  route's `lastmod` on every single build, which means it claimed every
-  page changed on every deploy — search engines learn to discount a freshness
-  signal that's always "today" regardless of whether anything actually
-  changed, which is one real contributing factor to pages sitting in
-  Google Search Console as "Discovered/Crawled – currently not indexed."
-  Fixed by deriving `lastmod` from `git log -1 --format=%cd -- <file>` on
-  the actual content source (`religions.ts` for chant/figure/religion
-  routes, each post's own `updatedDate` for blog posts) — a real date that
-  only changes when the content actually does. Note this is one input among
-  several to indexing, not a guaranteed fix — a new site with a block of
-  template-similar pages (many single-verse mantra pages share near-
-  identical page structure, differing mainly in a few lines of unique
-  text) commonly takes real calendar time to fully index regardless of
-  code changes; there's no code fix for "the site is new and Google hasn't
-  built trust in it yet."
+- **Sitemap `lastmod` must reflect real content changes, not build time —
+  and NOT `git log` either, because Vercel does a shallow clone.**
+  `gen-seo.mjs` originally wrote `new Date()` (today) as every route's
+  `lastmod` on every build — a freshness signal that's always "today" is
+  one search engines learn to discount, a real contributing factor (among
+  several — a new site with many template-similar pages also just takes
+  real calendar time to index, no code fix for that part) to pages sitting
+  as "Discovered/Crawled – currently not indexed." First fix attempt used
+  `git log -1 --format=%cd -- <file>`, which worked locally (full git
+  history) but was WRONG in production: Vercel's build does a shallow
+  clone, so `git log` there only sees the single most recent commit for
+  every file, making every route report that same one date — not caught
+  by local testing, only found by curling the deployed sitemap.xml and
+  noticing every lastmod was identical. Fixed for real with a hand-
+  maintained `CONTENT_UPDATED` constant in `religions.ts` (bump it when
+  chant content meaningfully changes) plus each blog post's own
+  `updatedDate` — no git dependency, so it can't vary by clone depth.
 - **Vercel project name must be lowercase** — the folder is `HolyPlace`
   (capital H/P), and `vercel --prod --yes` failed on the first deploy with
   a 400 because the auto-derived project name had uppercase letters. Deploy

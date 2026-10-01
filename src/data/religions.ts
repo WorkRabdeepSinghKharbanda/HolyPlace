@@ -1,3 +1,10 @@
+// Bump this by hand whenever a chant/figure/religion's content meaningfully
+// changes (new chant, corrected text, new figure). Used for sitemap lastmod
+// — deliberately NOT derived from git log, since Vercel's build does a
+// shallow clone and `git log -1 -- <file>` there only sees the single most
+// recent commit, which would make every file report the same date.
+export const CONTENT_UPDATED = "2026-09-15";
+
 export interface Verse {
   hi: string;
   translit?: string;
