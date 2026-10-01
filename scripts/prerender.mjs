@@ -25,31 +25,42 @@ function escapeAttr(s) {
   return escapeHtml(s);
 }
 
+// Replacement value passed as a function so `$&`/`$$`/`$\``/`$'` in the
+// value itself (e.g. a title containing a literal "$") never get treated as
+// String.replace's special replacement patterns.
+function replaceTag(html, pattern, value) {
+  return html.replace(pattern, () => value);
+}
+
+// JSON.stringify doesn't escape "</script>" or "<", so a literal closing
+// tag inside a value could break out of the <script> element. No current
+// content contains one, but escape defensively since this becomes a real
+// injection vector the moment any user-submitted content exists.
+function jsonLdScript(id, data) {
+  const json = JSON.stringify(data).replace(/</g, "\\u003c");
+  return `<script type="application/ld+json" id="${id}">${json}</script>`;
+}
+
 function injectHead(html, meta) {
   let out = html;
-  out = out.replace(/<title>.*?<\/title>/s, `<title>${escapeHtml(meta.title)}</title>`);
-  out = out.replace(
-    /(<meta name="description" content=")[^"]*(")/,
-    `$1${escapeAttr(meta.description)}$2`
-  );
-  out = out.replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${escapeAttr(meta.canonical)}$2`);
-  out = out.replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${escapeAttr(meta.title)}$2`);
-  out = out.replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${escapeAttr(meta.description)}$2`);
-  out = out.replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${escapeAttr(meta.canonical)}$2`);
-  out = out.replace(/(<meta property="og:type" content=")[^"]*(")/, `$1${escapeAttr(meta.ogType)}$2`);
-  out = out.replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${escapeAttr(meta.title)}$2`);
-  out = out.replace(/(<meta name="twitter:description" content=")[^"]*(")/, `$1${escapeAttr(meta.description)}$2`);
+  out = replaceTag(out, /<title>.*?<\/title>/s, `<title>${escapeHtml(meta.title)}</title>`);
+  out = replaceTag(out, /<meta name="description" content="[^"]*"/, `<meta name="description" content="${escapeAttr(meta.description)}"`);
+  out = replaceTag(out, /<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${escapeAttr(meta.canonical)}"`);
+  out = replaceTag(out, /<meta property="og:title" content="[^"]*"/, `<meta property="og:title" content="${escapeAttr(meta.title)}"`);
+  out = replaceTag(out, /<meta property="og:description" content="[^"]*"/, `<meta property="og:description" content="${escapeAttr(meta.description)}"`);
+  out = replaceTag(out, /<meta property="og:url" content="[^"]*"/, `<meta property="og:url" content="${escapeAttr(meta.canonical)}"`);
+  out = replaceTag(out, /<meta property="og:type" content="[^"]*"/, `<meta property="og:type" content="${escapeAttr(meta.ogType)}"`);
+  out = replaceTag(out, /<meta name="twitter:title" content="[^"]*"/, `<meta name="twitter:title" content="${escapeAttr(meta.title)}"`);
+  out = replaceTag(out, /<meta name="twitter:description" content="[^"]*"/, `<meta name="twitter:description" content="${escapeAttr(meta.description)}"`);
 
-  const extraScripts = meta.jsonLd
-    .map((j) => `<script type="application/ld+json" id="${j.id}">${JSON.stringify(j.data)}</script>`)
-    .join("\n    ");
-  out = out.replace("</head>", `    ${extraScripts}\n  </head>`);
+  const extraScripts = meta.jsonLd.map((j) => jsonLdScript(j.id, j.data)).join("\n    ");
+  out = replaceTag(out, "</head>", `    ${extraScripts}\n  </head>`);
 
   return out;
 }
 
 function injectRoot(html, appHtml) {
-  return html.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
+  return replaceTag(html, '<div id="root"></div>', `<div id="root">${appHtml}</div>`);
 }
 
 const routes = await enumerateRoutes();
